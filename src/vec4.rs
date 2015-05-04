@@ -2,8 +2,9 @@
 
 use std::ops::{Add, Sub, Mul, Div};
 use std::cmp::PartialEq;
-use num::{Float, Zero, One};
+pub use num::{Float, Zero, One};
 use super::eq::{almost_equal, equal};
+use std::fmt;
 
 /// Vec4 is a generic four-component (3D) vector type.
 ///
@@ -12,7 +13,7 @@ use super::eq::{almost_equal, equal};
 /// as near-equality via the almost_equal function. Otherwise if the type is a
 /// signed or unsigned integer type, equality is defined as a binary (i.e. 1:1
 /// identical) comparison.
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Debug)]
 pub struct Vec4<T>{
   x: T,
   y: T,
@@ -35,6 +36,20 @@ impl<T> Vec4<T>{
   pub fn new(x: T, y: T, z: T, w: T) -> Vec4<T> {
     Vec4{x: x, y: y, z: z, w: w}
   }
+}
+
+impl<T: fmt::Display> fmt::Display for Vec4<T> {
+    /// fmt formats the vector.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let x = fiz_math::Vec4::new(1u8, 5u8, 2u8, 3u8);
+    /// assert!(format!("{}", x) == "Vec3(1, 5, 2, 3)");
+    /// ```
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "Vec3({}, {}, {}, {})", self.x, self.y, self.z, self.w)
+    }
 }
 
 impl<T: One> One for Vec4<T>{

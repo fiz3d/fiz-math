@@ -4,6 +4,7 @@ use std::ops::{Add, Sub, Mul, Div};
 use std::cmp::PartialEq;
 pub use num::{Float, Zero, One};
 use super::eq::{almost_equal, equal};
+use std::fmt;
 
 /// Vec3 is a generic three-component (2D) vector type.
 ///
@@ -12,7 +13,7 @@ use super::eq::{almost_equal, equal};
 /// as near-equality via the almost_equal function. Otherwise if the type is a
 /// signed or unsigned integer type, equality is defined as a binary (i.e. 1:1
 /// identical) comparison.
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Debug)]
 pub struct Vec3<T>{
   x: T,
   y: T,
@@ -26,14 +27,30 @@ impl<T> Vec3<T>{
   ///
   /// ```
   /// let x = fiz_math::Vec3::new(4.0f32, 8.0f32, 2.0f32);
+  /// println!("{:?}", x);
   /// ```
   ///
   /// ```
   /// let x = fiz_math::Vec3::new(1u8, 5u8, 2u8);
+  /// println!("{:?}", x);
   /// ```
   pub fn new(x: T, y: T, z: T) -> Vec3<T> {
     Vec3{x: x, y: y, z: z}
   }
+}
+
+impl<T: fmt::Display> fmt::Display for Vec3<T> {
+    /// fmt formats the vector.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let x = fiz_math::Vec3::new(1u8, 5u8, 2u8);
+    /// assert!(format!("{}", x) == "Vec3(1, 5, 2)");
+    /// ```
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "Vec3({}, {}, {})", self.x, self.y, self.z)
+    }
 }
 
 impl<T: One> One for Vec3<T>{

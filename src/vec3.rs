@@ -39,6 +39,18 @@ impl<T> Vec3<T>{
   }
 }
 
+/// Point3 is a generic three-component (3D) point type.
+///
+/// # Examples
+///
+/// ```
+/// use fiz_math::Point3;
+///
+/// let p = Point3::new(1.0, 2.0, 3.0);
+/// assert_eq!(p + p, Point3::new(2.0, 4.0, 6.0))
+/// ```
+pub type Point3<T> = Vec3<T>;
+
 impl<T: fmt::Display> fmt::Display for Vec3<T> {
     /// fmt formats the vector.
     ///

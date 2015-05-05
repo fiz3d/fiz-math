@@ -2,8 +2,8 @@
 
 use std::ops::{Add, Sub, Mul, Div};
 use std::cmp::PartialEq;
-pub use num::{Float, Zero, One};
-use super::eq::{almost_equal, equal};
+pub use num::{Zero, One};
+use super::float::Float;
 use std::fmt;
 
 /// Vec3 is a generic three-component (2D) vector type.
@@ -90,9 +90,9 @@ impl<T: Float> Vec3<T>{
   /// assert!(!a.almost_equal(b, 0.1));
   /// ```
   pub fn almost_equal(self, other: Vec3<T>, abs_tol: T) -> bool {
-    almost_equal(self.x, other.x, abs_tol) &&
-      almost_equal(self.y, other.y, abs_tol) &&
-      almost_equal(self.z, other.z, abs_tol)
+    self.x.almost_equal(other.x, abs_tol) &&
+      self.y.almost_equal(other.y, abs_tol) &&
+      self.z.almost_equal(other.z, abs_tol)
   }
 }
 
@@ -208,9 +208,9 @@ macro_rules! impl_floats {
             /// assert!(a == b);
             /// ```
             fn eq(&self, _rhs: &Vec3<$ty>) -> bool {
-                equal(self.x, _rhs.x) &&
-                  equal(self.y, _rhs.y) &&
-                  equal(self.z, _rhs.z)
+                self.x.equal(_rhs.x) &&
+                  self.y.equal(_rhs.y) &&
+                  self.z.equal(_rhs.z)
             }
         }
 

@@ -1,5 +1,7 @@
 extern crate num;
 
+use std::f64;
+
 /// The default epsilon value used for floating point comparisons.
 pub static EPSILON:f64 = 1.0E-8;
 
@@ -54,6 +56,32 @@ pub trait Float: num::Float{
   /// assert_eq!(0.0.clamp(0.1, 1.0), 0.1);
   /// ```
   fn clamp(self, min: Self, max: Self) -> Self;
+
+  /// radians converts the value `self` (presumed to be in degrees) to radians.
+  ///
+  /// # Examples
+  ///
+  /// ```
+  /// use fiz_math::Float;
+  /// use std::f64::consts::PI;
+  ///
+  /// assert_eq!(180.0.radians(), PI);
+  /// assert_eq!(360.0.radians(), PI * 2.0);
+  /// ```
+  fn radians(self) -> Self;
+
+  /// degrees converts the value `self` (presumed to be in radians) to degrees.
+  ///
+  /// # Examples
+  ///
+  /// ```
+  /// use fiz_math::Float;
+  /// use std::f64::consts::PI;
+  ///
+  /// assert_eq!(PI.degrees(), 180.0);
+  /// assert_eq!((PI*2.0).degrees(), 360.0);
+  /// ```
+  fn degrees(self) -> Self;
 }
 
 impl<T: num::Float> Float for T {
@@ -68,5 +96,13 @@ impl<T: num::Float> Float for T {
 
   fn clamp(self, min: Self, max: Self) -> Self {
     self.min(max).max(min)
+  }
+
+  fn radians(self) -> Self {
+    T::from(f64::consts::PI).unwrap() * self / T::from(180.0).unwrap()
+  }
+
+  fn degrees(self) -> Self {
+    self * T::from(180.0 / f64::consts::PI).unwrap()
   }
 }

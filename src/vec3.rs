@@ -58,7 +58,7 @@ impl<T: fmt::Display> fmt::Display for Vec3<T> {
     ///
     /// ```
     /// let x = fiz_math::Vec3::new(1u8, 5u8, 2u8);
-    /// assert!(format!("{}", x) == "Vec3(1, 5, 2)");
+    /// assert_eq!(format!("{}", x), "Vec3(1, 5, 2)");
     /// ```
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "Vec3({}, {}, {})", self.x, self.y, self.z)
@@ -120,7 +120,7 @@ impl<T: Add<Output = T>> Add for Vec3<T>{
   ///
   /// let a = Vec3::new(1, 2, 3);
   /// let b = Vec3::new(4, 5, 6);
-  /// assert!(a + b == Vec3::new(5, 7, 9));
+  /// assert_eq!(a + b, Vec3::new(5, 7, 9));
   /// ```
   fn add(self, _rhs: Vec3<T>) -> Vec3<T> {
     Vec3{
@@ -143,7 +143,7 @@ impl<T: Sub<Output = T>> Sub for Vec3<T>{
   ///
   /// let a = Vec3::new(1, 2, 3);
   /// let b = Vec3::new(4, 5, 6);
-  /// assert!(a - b == Vec3::new(-3, -3, -3));
+  /// assert_eq!(a - b, Vec3::new(-3, -3, -3));
   /// ```
   fn sub(self, _rhs: Vec3<T>) -> Vec3<T> {
     Vec3{
@@ -166,7 +166,7 @@ impl<T: Mul<Output = T>> Mul for Vec3<T>{
   ///
   /// let a = Vec3::new(1, 2, 3);
   /// let b = Vec3::new(4, 5, 6);
-  /// assert!(a * b == Vec3::new(4, 10, 18));
+  /// assert_eq!(a * b, Vec3::new(4, 10, 18));
   /// ```
   fn mul(self, _rhs: Vec3<T>) -> Vec3<T> {
     Vec3{
@@ -189,7 +189,7 @@ impl<T: Div<Output = T>> Div for Vec3<T>{
   ///
   /// let a = Vec3::new(4, 5, 9);
   /// let b = Vec3::new(1, 2, 3);
-  /// assert!(a / b == Vec3::new(4, 2, 3));
+  /// assert_eq!(a / b, Vec3::new(4, 2, 3));
   /// ```
   fn div(self, _rhs: Vec3<T>) -> Vec3<T> {
     Vec3{
@@ -217,7 +217,7 @@ macro_rules! impl_floats {
             ///
             /// let a = Vec3::new(4.0, 5.0, 9.0);
             /// let b = Vec3::new(4.0, 5.0, 9.00000000000000000000001);
-            /// assert!(a == b);
+            /// assert_eq!(a, b);
             /// ```
             fn eq(&self, _rhs: &Vec3<$ty>) -> bool {
                 self.x.equal(_rhs.x) &&
@@ -275,7 +275,7 @@ macro_rules! impl_ints {
             ///
             /// let a = Vec3::new(4, 5, 9);
             /// let b = Vec3::new(4, 5, 9);
-            /// assert!(a == b);
+            /// assert_eq!(a, b);
             /// ```
             ///
             fn eq(&self, _rhs: &Vec3<$ty>) -> bool {

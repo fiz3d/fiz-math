@@ -15,27 +15,27 @@ use std::fmt;
 /// identical) comparison.
 #[derive(Copy, Clone, Debug)]
 pub struct Vec4<T>{
-  x: T,
-  y: T,
-  z: T,
-  w: T
+    x: T,
+    y: T,
+    z: T,
+    w: T
 }
 
 impl<T> Vec4<T>{
-  /// new returns a new vector with the given parameters.
-  ///
-  /// # Examples
-  ///
-  /// ```
-  /// let x = fiz_math::Vec4::new(4.0f32, 8.0f32, 2.0f32, 3.0f32);
-  /// ```
-  ///
-  /// ```
-  /// let x = fiz_math::Vec4::new(1u8, 5u8, 2u8, 3u8);
-  /// ```
-  pub fn new(x: T, y: T, z: T, w: T) -> Vec4<T> {
-    Vec4{x: x, y: y, z: z, w: w}
-  }
+    /// new returns a new vector with the given parameters.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let x = fiz_math::Vec4::new(4.0f32, 8.0f32, 2.0f32, 3.0f32);
+    /// ```
+    ///
+    /// ```
+    /// let x = fiz_math::Vec4::new(1u8, 5u8, 2u8, 3u8);
+    /// ```
+    pub fn new(x: T, y: T, z: T, w: T) -> Vec4<T> {
+        Vec4{x: x, y: y, z: z, w: w}
+    }
 }
 
 impl<T: fmt::Display> fmt::Display for Vec4<T> {
@@ -53,143 +53,143 @@ impl<T: fmt::Display> fmt::Display for Vec4<T> {
 }
 
 impl<T: One> One for Vec4<T>{
-  /// one returns the one value for a vector whose component type implements the
-  /// num::One trait.
-  ///
-  /// # Examples
-  ///
-  /// ```
-  /// use fiz_math::One;
-  ///
-  /// let x = fiz_math::Vec4::<f32>::one();
-  /// ```
-  ///
-  /// ```
-  /// use fiz_math::One;
-  ///
-  /// let x = fiz_math::Vec4::<i64>::one();
-  /// ```
-  fn one() -> Self {
-    Vec4{x: T::one(), y: T::one(), z: T::one(), w: T::one()}
-  }
+    /// one returns the one value for a vector whose component type implements the
+    /// num::One trait.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::One;
+    ///
+    /// let x = fiz_math::Vec4::<f32>::one();
+    /// ```
+    ///
+    /// ```
+    /// use fiz_math::One;
+    ///
+    /// let x = fiz_math::Vec4::<i64>::one();
+    /// ```
+    fn one() -> Self {
+        Vec4{x: T::one(), y: T::one(), z: T::one(), w: T::one()}
+    }
 }
 
 impl<T: Float> Vec4<T>{
-  /// almost_equal tells if this vector is equal to the other given an absolute
-  /// tolerence value (see the almost_equal function for more details).
-  ///
-  /// # Examples
-  ///
-  /// ```
-  /// use fiz_math::Vec4;
-  ///
-  /// let a = Vec4::<f32>::new(1.0, 1.0, 1.0, 1.0);
-  /// let b = Vec4::<f32>::new(0.9, 0.9, 0.9, 0.9);
-  /// assert!(a.almost_equal(b, 0.1000001));
-  /// assert!(!a.almost_equal(b, 0.1));
-  /// ```
-  pub fn almost_equal(self, other: Vec4<T>, abs_tol: T) -> bool {
-    self.x.almost_equal(other.x, abs_tol) &&
-      self.y.almost_equal(other.y, abs_tol) &&
-      self.z.almost_equal(other.z, abs_tol) &&
-      self.w.almost_equal(other.w, abs_tol)
-  }
+    /// almost_equal tells if this vector is equal to the other given an absolute
+    /// tolerence value (see the almost_equal function for more details).
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::Vec4;
+    ///
+    /// let a = Vec4::<f32>::new(1.0, 1.0, 1.0, 1.0);
+    /// let b = Vec4::<f32>::new(0.9, 0.9, 0.9, 0.9);
+    /// assert!(a.almost_equal(b, 0.1000001));
+    /// assert!(!a.almost_equal(b, 0.1));
+    /// ```
+    pub fn almost_equal(self, other: Vec4<T>, abs_tol: T) -> bool {
+        self.x.almost_equal(other.x, abs_tol) &&
+        self.y.almost_equal(other.y, abs_tol) &&
+        self.z.almost_equal(other.z, abs_tol) &&
+        self.w.almost_equal(other.w, abs_tol)
+    }
 }
 
 impl<T: Add<Output = T>> Add for Vec4<T>{
-  type Output = Vec4<T>;
+    type Output = Vec4<T>;
 
-  /// add performs component-wise addition of two vectors.
-  ///
-  /// # Examples
-  ///
-  /// ```
-  /// use fiz_math::Vec4;
-  ///
-  /// let a = Vec4::new(1, 2, 3, 3);
-  /// let b = Vec4::new(4, 5, 6, 6);
-  /// assert_eq!(a + b, Vec4::new(5, 7, 9, 9));
-  /// ```
-  fn add(self, _rhs: Vec4<T>) -> Vec4<T> {
-    Vec4{
-      x: self.x + _rhs.x,
-      y: self.y + _rhs.y,
-      z: self.z + _rhs.z,
-      w: self.w + _rhs.w,
+    /// add performs component-wise addition of two vectors.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::Vec4;
+    ///
+    /// let a = Vec4::new(1, 2, 3, 3);
+    /// let b = Vec4::new(4, 5, 6, 6);
+    /// assert_eq!(a + b, Vec4::new(5, 7, 9, 9));
+    /// ```
+    fn add(self, _rhs: Vec4<T>) -> Vec4<T> {
+        Vec4{
+            x: self.x + _rhs.x,
+            y: self.y + _rhs.y,
+            z: self.z + _rhs.z,
+            w: self.w + _rhs.w,
+        }
     }
-  }
 }
 
 impl<T: Sub<Output = T>> Sub for Vec4<T>{
-  type Output = Vec4<T>;
+    type Output = Vec4<T>;
 
-  /// sub performs component-wise subtraction of two vectors.
-  ///
-  /// # Examples
-  ///
-  /// ```
-  /// use fiz_math::Vec4;
-  ///
-  /// let a = Vec4::new(1, 2, 3, 3);
-  /// let b = Vec4::new(4, 5, 6, 6);
-  /// assert_eq!(a - b, Vec4::new(-3, -3, -3, -3));
-  /// ```
-  fn sub(self, _rhs: Vec4<T>) -> Vec4<T> {
-    Vec4{
-      x: self.x - _rhs.x,
-      y: self.y - _rhs.y,
-      z: self.z - _rhs.z,
-      w: self.w - _rhs.w,
+    /// sub performs component-wise subtraction of two vectors.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::Vec4;
+    ///
+    /// let a = Vec4::new(1, 2, 3, 3);
+    /// let b = Vec4::new(4, 5, 6, 6);
+    /// assert_eq!(a - b, Vec4::new(-3, -3, -3, -3));
+    /// ```
+    fn sub(self, _rhs: Vec4<T>) -> Vec4<T> {
+        Vec4{
+            x: self.x - _rhs.x,
+            y: self.y - _rhs.y,
+            z: self.z - _rhs.z,
+            w: self.w - _rhs.w,
+        }
     }
-  }
 }
 
 impl<T: Mul<Output = T>> Mul for Vec4<T>{
-  type Output = Vec4<T>;
+    type Output = Vec4<T>;
 
-  /// mul performs component-wise multiplication of two vectors.
-  ///
-  /// # Examples
-  ///
-  /// ```
-  /// use fiz_math::Vec4;
-  ///
-  /// let a = Vec4::new(1, 2, 3, 3);
-  /// let b = Vec4::new(4, 5, 6, 6);
-  /// assert_eq!(a * b, Vec4::new(4, 10, 18, 18));
-  /// ```
-  fn mul(self, _rhs: Vec4<T>) -> Vec4<T> {
-    Vec4{
-      x: self.x * _rhs.x,
-      y: self.y * _rhs.y,
-      z: self.z * _rhs.z,
-      w: self.w * _rhs.w,
+    /// mul performs component-wise multiplication of two vectors.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::Vec4;
+    ///
+    /// let a = Vec4::new(1, 2, 3, 3);
+    /// let b = Vec4::new(4, 5, 6, 6);
+    /// assert_eq!(a * b, Vec4::new(4, 10, 18, 18));
+    /// ```
+    fn mul(self, _rhs: Vec4<T>) -> Vec4<T> {
+        Vec4{
+            x: self.x * _rhs.x,
+            y: self.y * _rhs.y,
+            z: self.z * _rhs.z,
+            w: self.w * _rhs.w,
+        }
     }
-  }
 }
 
 impl<T: Div<Output = T>> Div for Vec4<T>{
-  type Output = Vec4<T>;
+    type Output = Vec4<T>;
 
-  /// div performs component-wise division of two vectors.
-  ///
-  /// # Examples
-  ///
-  /// ```
-  /// use fiz_math::Vec4;
-  ///
-  /// let a = Vec4::new(4, 5, 9, 9);
-  /// let b = Vec4::new(1, 2, 3, 3);
-  /// assert_eq!(a / b, Vec4::new(4, 2, 3, 3));
-  /// ```
-  fn div(self, _rhs: Vec4<T>) -> Vec4<T> {
-    Vec4{
-      x: self.x / _rhs.x,
-      y: self.y / _rhs.y,
-      z: self.z / _rhs.z,
-      w: self.w / _rhs.w,
+    /// div performs component-wise division of two vectors.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::Vec4;
+    ///
+    /// let a = Vec4::new(4, 5, 9, 9);
+    /// let b = Vec4::new(1, 2, 3, 3);
+    /// assert_eq!(a / b, Vec4::new(4, 2, 3, 3));
+    /// ```
+    fn div(self, _rhs: Vec4<T>) -> Vec4<T> {
+        Vec4{
+            x: self.x / _rhs.x,
+            y: self.y / _rhs.y,
+            z: self.z / _rhs.z,
+            w: self.w / _rhs.w,
+        }
     }
-  }
 }
 
 // Different implementations are needed for PartialEq for float (relative
@@ -213,45 +213,45 @@ macro_rules! impl_floats {
             /// ```
             fn eq(&self, _rhs: &Vec4<$ty>) -> bool {
                 self.x.equal(_rhs.x) &&
-                  self.y.equal(_rhs.y) &&
-                  self.z.equal(_rhs.z) &&
-                  self.w.equal(_rhs.w)
+                self.y.equal(_rhs.y) &&
+                self.z.equal(_rhs.z) &&
+                self.w.equal(_rhs.w)
             }
         }
 
         impl Zero for Vec4<$ty>{
-          /// zero returns the zero-value for the vector.
-          ///
-          /// # Examples
-          ///
-          /// ```
-          /// use fiz_math::Zero;
-          ///
-          /// let x = fiz_math::Vec4::<f32>::zero();
-          /// ```
-          ///
-          /// ```
-          /// use fiz_math::Zero;
-          ///
-          /// let x = fiz_math::Vec4::<f64>::zero();
-          /// ```
-          fn zero() -> Self {
-            Vec4{x: 0.0, y: 0.0, z: 0.0, w: 0.0}
-          }
+            /// zero returns the zero-value for the vector.
+            ///
+            /// # Examples
+            ///
+            /// ```
+            /// use fiz_math::Zero;
+            ///
+            /// let x = fiz_math::Vec4::<f32>::zero();
+            /// ```
+            ///
+            /// ```
+            /// use fiz_math::Zero;
+            ///
+            /// let x = fiz_math::Vec4::<f64>::zero();
+            /// ```
+            fn zero() -> Self {
+                Vec4{x: 0.0, y: 0.0, z: 0.0, w: 0.0}
+            }
 
-          /// is_zero tests if the vector is equal to zero.
-          ///
-          /// # Examples
-          ///
-          /// ```
-          /// use fiz_math::Zero;
-          ///
-          /// let x = fiz_math::Vec4::new(1.0, 0.0, 0.0, 0.0);
-          /// assert!(!x.is_zero())
-          /// ```
-          fn is_zero(&self) -> bool {
-            *self == Vec4::<$ty>::zero()
-          }
+            /// is_zero tests if the vector is equal to zero.
+            ///
+            /// # Examples
+            ///
+            /// ```
+            /// use fiz_math::Zero;
+            ///
+            /// let x = fiz_math::Vec4::new(1.0, 0.0, 0.0, 0.0);
+            /// assert!(!x.is_zero())
+            /// ```
+            fn is_zero(&self) -> bool {
+                *self == Vec4::<$ty>::zero()
+            }
         }
     )*);
 }
@@ -273,45 +273,45 @@ macro_rules! impl_ints {
             ///
             fn eq(&self, _rhs: &Vec4<$ty>) -> bool {
                 self.x == _rhs.x &&
-                  self.y == _rhs.y &&
-                  self.z == _rhs.z &&
-                  self.w == _rhs.w
+                self.y == _rhs.y &&
+                self.z == _rhs.z &&
+                self.w == _rhs.w
             }
         }
 
         impl Zero for Vec4<$ty>{
-          /// zero returns the zero-value for the vector.
-          ///
-          /// # Examples
-          ///
-          /// ```
-          /// use fiz_math::Zero;
-          ///
-          /// let x = fiz_math::Vec4::<u8>::zero();
-          /// ```
-          ///
-          /// ```
-          /// use fiz_math::Zero;
-          ///
-          /// let x = fiz_math::Vec4::<i64>::zero();
-          /// ```
-          fn zero() -> Self {
-            Vec4{x: 0, y: 0, z: 0, w: 0}
-          }
+            /// zero returns the zero-value for the vector.
+            ///
+            /// # Examples
+            ///
+            /// ```
+            /// use fiz_math::Zero;
+            ///
+            /// let x = fiz_math::Vec4::<u8>::zero();
+            /// ```
+            ///
+            /// ```
+            /// use fiz_math::Zero;
+            ///
+            /// let x = fiz_math::Vec4::<i64>::zero();
+            /// ```
+            fn zero() -> Self {
+                Vec4{x: 0, y: 0, z: 0, w: 0}
+            }
 
-          /// is_zero tests if the vector is equal to zero.
-          ///
-          /// # Examples
-          ///
-          /// ```
-          /// use fiz_math::Zero;
-          ///
-          /// let x = fiz_math::Vec4::new(1, 0, 0, 0);
-          /// assert!(!x.is_zero())
-          /// ```
-          fn is_zero(&self) -> bool {
-            *self == Vec4::<$ty>::zero()
-          }
+            /// is_zero tests if the vector is equal to zero.
+            ///
+            /// # Examples
+            ///
+            /// ```
+            /// use fiz_math::Zero;
+            ///
+            /// let x = fiz_math::Vec4::new(1, 0, 0, 0);
+            /// assert!(!x.is_zero())
+            /// ```
+            fn is_zero(&self) -> bool {
+                *self == Vec4::<$ty>::zero()
+            }
         }
     )*);
 }

@@ -15,28 +15,28 @@ use std::fmt;
 /// identical) comparison.
 #[derive(Copy, Clone, Debug)]
 pub struct Vec3<T>{
-  x: T,
-  y: T,
-  z: T
+    x: T,
+    y: T,
+    z: T
 }
 
 impl<T> Vec3<T>{
-  /// new returns a new vector with the given parameters.
-  ///
-  /// # Examples
-  ///
-  /// ```
-  /// let x = fiz_math::Vec3::new(4.0f32, 8.0f32, 2.0f32);
-  /// println!("{:?}", x);
-  /// ```
-  ///
-  /// ```
-  /// let x = fiz_math::Vec3::new(1u8, 5u8, 2u8);
-  /// println!("{:?}", x);
-  /// ```
-  pub fn new(x: T, y: T, z: T) -> Vec3<T> {
-    Vec3{x: x, y: y, z: z}
-  }
+    /// new returns a new vector with the given parameters.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let x = fiz_math::Vec3::new(4.0f32, 8.0f32, 2.0f32);
+    /// println!("{:?}", x);
+    /// ```
+    ///
+    /// ```
+    /// let x = fiz_math::Vec3::new(1u8, 5u8, 2u8);
+    /// println!("{:?}", x);
+    /// ```
+    pub fn new(x: T, y: T, z: T) -> Vec3<T> {
+        Vec3{x: x, y: y, z: z}
+    }
 }
 
 /// Point3 is a generic three-component (3D) point type.
@@ -66,138 +66,138 @@ impl<T: fmt::Display> fmt::Display for Vec3<T> {
 }
 
 impl<T: One> One for Vec3<T>{
-  /// one returns the one value for a vector whose component type implements the
-  /// num::One trait.
-  ///
-  /// # Examples
-  ///
-  /// ```
-  /// use fiz_math::One;
-  ///
-  /// let x = fiz_math::Vec3::<f32>::one();
-  /// ```
-  ///
-  /// ```
-  /// use fiz_math::One;
-  ///
-  /// let x = fiz_math::Vec3::<i64>::one();
-  /// ```
-  fn one() -> Self {
-    Vec3{x: T::one(), y: T::one(), z: T::one()}
-  }
+    /// one returns the one value for a vector whose component type implements the
+    /// num::One trait.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::One;
+    ///
+    /// let x = fiz_math::Vec3::<f32>::one();
+    /// ```
+    ///
+    /// ```
+    /// use fiz_math::One;
+    ///
+    /// let x = fiz_math::Vec3::<i64>::one();
+    /// ```
+    fn one() -> Self {
+        Vec3{x: T::one(), y: T::one(), z: T::one()}
+    }
 }
 
 impl<T: Float> Vec3<T>{
-  /// almost_equal tells if this vector is equal to the other given an absolute
-  /// tolerence value (see the almost_equal function for more details).
-  ///
-  /// # Examples
-  ///
-  /// ```
-  /// use fiz_math::Vec3;
-  ///
-  /// let a = Vec3::<f32>::new(1.0, 1.0, 1.0);
-  /// let b = Vec3::<f32>::new(0.9, 0.9, 0.9);
-  /// assert!(a.almost_equal(b, 0.1000001));
-  /// assert!(!a.almost_equal(b, 0.1));
-  /// ```
-  pub fn almost_equal(self, other: Vec3<T>, abs_tol: T) -> bool {
-    self.x.almost_equal(other.x, abs_tol) &&
-      self.y.almost_equal(other.y, abs_tol) &&
-      self.z.almost_equal(other.z, abs_tol)
-  }
+    /// almost_equal tells if this vector is equal to the other given an absolute
+    /// tolerence value (see the almost_equal function for more details).
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::Vec3;
+    ///
+    /// let a = Vec3::<f32>::new(1.0, 1.0, 1.0);
+    /// let b = Vec3::<f32>::new(0.9, 0.9, 0.9);
+    /// assert!(a.almost_equal(b, 0.1000001));
+    /// assert!(!a.almost_equal(b, 0.1));
+    /// ```
+    pub fn almost_equal(self, other: Vec3<T>, abs_tol: T) -> bool {
+        self.x.almost_equal(other.x, abs_tol) &&
+        self.y.almost_equal(other.y, abs_tol) &&
+        self.z.almost_equal(other.z, abs_tol)
+    }
 }
 
 impl<T: Add<Output = T>> Add for Vec3<T>{
-  type Output = Vec3<T>;
+    type Output = Vec3<T>;
 
-  /// add performs component-wise addition of two vectors.
-  ///
-  /// # Examples
-  ///
-  /// ```
-  /// use fiz_math::Vec3;
-  ///
-  /// let a = Vec3::new(1, 2, 3);
-  /// let b = Vec3::new(4, 5, 6);
-  /// assert_eq!(a + b, Vec3::new(5, 7, 9));
-  /// ```
-  fn add(self, _rhs: Vec3<T>) -> Vec3<T> {
-    Vec3{
-      x: self.x + _rhs.x,
-      y: self.y + _rhs.y,
-      z: self.z + _rhs.z,
+    /// add performs component-wise addition of two vectors.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::Vec3;
+    ///
+    /// let a = Vec3::new(1, 2, 3);
+    /// let b = Vec3::new(4, 5, 6);
+    /// assert_eq!(a + b, Vec3::new(5, 7, 9));
+    /// ```
+    fn add(self, _rhs: Vec3<T>) -> Vec3<T> {
+        Vec3{
+            x: self.x + _rhs.x,
+            y: self.y + _rhs.y,
+            z: self.z + _rhs.z,
+        }
     }
-  }
 }
 
 impl<T: Sub<Output = T>> Sub for Vec3<T>{
-  type Output = Vec3<T>;
+    type Output = Vec3<T>;
 
-  /// sub performs component-wise subtraction of two vectors.
-  ///
-  /// # Examples
-  ///
-  /// ```
-  /// use fiz_math::Vec3;
-  ///
-  /// let a = Vec3::new(1, 2, 3);
-  /// let b = Vec3::new(4, 5, 6);
-  /// assert_eq!(a - b, Vec3::new(-3, -3, -3));
-  /// ```
-  fn sub(self, _rhs: Vec3<T>) -> Vec3<T> {
-    Vec3{
-      x: self.x - _rhs.x,
-      y: self.y - _rhs.y,
-      z: self.z - _rhs.z,
+    /// sub performs component-wise subtraction of two vectors.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::Vec3;
+    ///
+    /// let a = Vec3::new(1, 2, 3);
+    /// let b = Vec3::new(4, 5, 6);
+    /// assert_eq!(a - b, Vec3::new(-3, -3, -3));
+    /// ```
+    fn sub(self, _rhs: Vec3<T>) -> Vec3<T> {
+        Vec3{
+            x: self.x - _rhs.x,
+            y: self.y - _rhs.y,
+            z: self.z - _rhs.z,
+        }
     }
-  }
 }
 
 impl<T: Mul<Output = T>> Mul for Vec3<T>{
-  type Output = Vec3<T>;
+    type Output = Vec3<T>;
 
-  /// mul performs component-wise multiplication of two vectors.
-  ///
-  /// # Examples
-  ///
-  /// ```
-  /// use fiz_math::Vec3;
-  ///
-  /// let a = Vec3::new(1, 2, 3);
-  /// let b = Vec3::new(4, 5, 6);
-  /// assert_eq!(a * b, Vec3::new(4, 10, 18));
-  /// ```
-  fn mul(self, _rhs: Vec3<T>) -> Vec3<T> {
-    Vec3{
-      x: self.x * _rhs.x,
-      y: self.y * _rhs.y,
-      z: self.z * _rhs.z,
+    /// mul performs component-wise multiplication of two vectors.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::Vec3;
+    ///
+    /// let a = Vec3::new(1, 2, 3);
+    /// let b = Vec3::new(4, 5, 6);
+    /// assert_eq!(a * b, Vec3::new(4, 10, 18));
+    /// ```
+    fn mul(self, _rhs: Vec3<T>) -> Vec3<T> {
+        Vec3{
+            x: self.x * _rhs.x,
+            y: self.y * _rhs.y,
+            z: self.z * _rhs.z,
+        }
     }
-  }
 }
 
 impl<T: Div<Output = T>> Div for Vec3<T>{
-  type Output = Vec3<T>;
+    type Output = Vec3<T>;
 
-  /// div performs component-wise division of two vectors.
-  ///
-  /// # Examples
-  ///
-  /// ```
-  /// use fiz_math::Vec3;
-  ///
-  /// let a = Vec3::new(4, 5, 9);
-  /// let b = Vec3::new(1, 2, 3);
-  /// assert_eq!(a / b, Vec3::new(4, 2, 3));
-  /// ```
-  fn div(self, _rhs: Vec3<T>) -> Vec3<T> {
-    Vec3{
-      x: self.x / _rhs.x,
-      y: self.y / _rhs.y,
-      z: self.z / _rhs.z,
+    /// div performs component-wise division of two vectors.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::Vec3;
+    ///
+    /// let a = Vec3::new(4, 5, 9);
+    /// let b = Vec3::new(1, 2, 3);
+    /// assert_eq!(a / b, Vec3::new(4, 2, 3));
+    /// ```
+    fn div(self, _rhs: Vec3<T>) -> Vec3<T> {
+        Vec3{
+            x: self.x / _rhs.x,
+            y: self.y / _rhs.y,
+            z: self.z / _rhs.z,
+        }
     }
-  }
 }
 
 // Different implementations are needed for PartialEq for float (relative
@@ -221,44 +221,44 @@ macro_rules! impl_floats {
             /// ```
             fn eq(&self, _rhs: &Vec3<$ty>) -> bool {
                 self.x.equal(_rhs.x) &&
-                  self.y.equal(_rhs.y) &&
-                  self.z.equal(_rhs.z)
+                self.y.equal(_rhs.y) &&
+                self.z.equal(_rhs.z)
             }
         }
 
         impl Zero for Vec3<$ty>{
-          /// zero returns the zero-value for the vector.
-          ///
-          /// # Examples
-          ///
-          /// ```
-          /// use fiz_math::Zero;
-          ///
-          /// let x = fiz_math::Vec3::<f32>::zero();
-          /// ```
-          ///
-          /// ```
-          /// use fiz_math::Zero;
-          ///
-          /// let x = fiz_math::Vec3::<f64>::zero();
-          /// ```
-          fn zero() -> Self {
-            Vec3{x: 0.0, y: 0.0, z: 0.0}
-          }
+            /// zero returns the zero-value for the vector.
+            ///
+            /// # Examples
+            ///
+            /// ```
+            /// use fiz_math::Zero;
+            ///
+            /// let x = fiz_math::Vec3::<f32>::zero();
+            /// ```
+            ///
+            /// ```
+            /// use fiz_math::Zero;
+            ///
+            /// let x = fiz_math::Vec3::<f64>::zero();
+            /// ```
+            fn zero() -> Self {
+                Vec3{x: 0.0, y: 0.0, z: 0.0}
+            }
 
-          /// is_zero tests if the vector is equal to zero.
-          ///
-          /// # Examples
-          ///
-          /// ```
-          /// use fiz_math::Zero;
-          ///
-          /// let x = fiz_math::Vec3::new(1.0, 0.0, 0.0);
-          /// assert!(!x.is_zero())
-          /// ```
-          fn is_zero(&self) -> bool {
-            *self == Vec3::<$ty>::zero()
-          }
+            /// is_zero tests if the vector is equal to zero.
+            ///
+            /// # Examples
+            ///
+            /// ```
+            /// use fiz_math::Zero;
+            ///
+            /// let x = fiz_math::Vec3::new(1.0, 0.0, 0.0);
+            /// assert!(!x.is_zero())
+            /// ```
+            fn is_zero(&self) -> bool {
+                *self == Vec3::<$ty>::zero()
+            }
         }
     )*);
 }
@@ -280,44 +280,44 @@ macro_rules! impl_ints {
             ///
             fn eq(&self, _rhs: &Vec3<$ty>) -> bool {
                 self.x == _rhs.x &&
-                  self.y == _rhs.y &&
-                  self.z == _rhs.z
+                self.y == _rhs.y &&
+                self.z == _rhs.z
             }
         }
 
         impl Zero for Vec3<$ty>{
-          /// zero returns the zero-value for the vector.
-          ///
-          /// # Examples
-          ///
-          /// ```
-          /// use fiz_math::Zero;
-          ///
-          /// let x = fiz_math::Vec3::<u8>::zero();
-          /// ```
-          ///
-          /// ```
-          /// use fiz_math::Zero;
-          ///
-          /// let x = fiz_math::Vec3::<i64>::zero();
-          /// ```
-          fn zero() -> Self {
-            Vec3{x: 0, y: 0, z: 0}
-          }
+            /// zero returns the zero-value for the vector.
+            ///
+            /// # Examples
+            ///
+            /// ```
+            /// use fiz_math::Zero;
+            ///
+            /// let x = fiz_math::Vec3::<u8>::zero();
+            /// ```
+            ///
+            /// ```
+            /// use fiz_math::Zero;
+            ///
+            /// let x = fiz_math::Vec3::<i64>::zero();
+            /// ```
+            fn zero() -> Self {
+                Vec3{x: 0, y: 0, z: 0}
+            }
 
-          /// is_zero tests if the vector is equal to zero.
-          ///
-          /// # Examples
-          ///
-          /// ```
-          /// use fiz_math::Zero;
-          ///
-          /// let x = fiz_math::Vec3::new(1, 0, 0);
-          /// assert!(!x.is_zero())
-          /// ```
-          fn is_zero(&self) -> bool {
-            *self == Vec3::<$ty>::zero()
-          }
+            /// is_zero tests if the vector is equal to zero.
+            ///
+            /// # Examples
+            ///
+            /// ```
+            /// use fiz_math::Zero;
+            ///
+            /// let x = fiz_math::Vec3::new(1, 0, 0);
+            /// assert!(!x.is_zero())
+            /// ```
+            fn is_zero(&self) -> bool {
+                *self == Vec3::<$ty>::zero()
+            }
         }
     )*);
 }

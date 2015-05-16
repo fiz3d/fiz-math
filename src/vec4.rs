@@ -120,6 +120,27 @@ impl<T: Add<Output = T>> Add for Vec4<T>{
     }
 }
 
+impl<T: Add<Output = T> + Copy> Vec4<T> {
+    /// add_scalar performs scalar addition on a vector.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::Vec4;
+    ///
+    /// let a = Vec4::new(1, 2, 3, 4);
+    /// assert_eq!(a.add_scalar(1), Vec4::new(2, 3, 4, 5));
+    /// ```
+    pub fn add_scalar(self, _rhs: T) -> Vec4<T> {
+        Vec4{
+            x: self.x + _rhs,
+            y: self.y + _rhs,
+            z: self.z + _rhs,
+            w: self.w + _rhs,
+        }
+    }
+}
+
 impl<T: Sub<Output = T>> Sub for Vec4<T>{
     type Output = Vec4<T>;
 

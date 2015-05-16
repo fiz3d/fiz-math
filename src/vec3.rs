@@ -131,6 +131,26 @@ impl<T: Add<Output = T>> Add for Vec3<T>{
     }
 }
 
+impl<T: Add<Output = T> + Copy> Vec3<T> {
+    /// add_scalar performs scalar addition on a vector.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::Vec3;
+    ///
+    /// let a = Vec3::new(1, 2, 3);
+    /// assert_eq!(a.add_scalar(1), Vec3::new(2, 3, 4));
+    /// ```
+    pub fn add_scalar(self, _rhs: T) -> Vec3<T> {
+        Vec3{
+            x: self.x + _rhs,
+            y: self.y + _rhs,
+            z: self.z + _rhs,
+        }
+    }
+}
+
 impl<T: Sub<Output = T>> Sub for Vec3<T>{
     type Output = Vec3<T>;
 

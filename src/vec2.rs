@@ -128,6 +128,25 @@ impl<T: Add<Output = T>> Add for Vec2<T>{
     }
 }
 
+impl<T: Add<Output = T> + Copy> Vec2<T> {
+    /// add_scalar performs scalar addition on a vector.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::Vec2;
+    ///
+    /// let a = Vec2::new(1, 2);
+    /// assert_eq!(a.add_scalar(1), Vec2::new(2, 3));
+    /// ```
+    pub fn add_scalar(self, _rhs: T) -> Vec2<T> {
+        Vec2{
+            x: self.x + _rhs,
+            y: self.y + _rhs,
+        }
+    }
+}
+
 impl<T: Sub<Output = T>> Sub for Vec2<T>{
     type Output = Vec2<T>;
 

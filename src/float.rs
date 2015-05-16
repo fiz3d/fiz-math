@@ -82,6 +82,24 @@ pub trait Float: num::Float{
     /// assert_eq!((PI*2.0).degrees(), 360.0);
     /// ```
     fn degrees(self) -> Self;
+
+
+    /// lerp performs a linear interpolation between `self` and `b`. The `t`
+    /// parameter is a number in the range 0.0 - 1.0.
+    ///
+    /// The interpolation method is precise, as such it is guaranteed that
+    /// `a.lerp(b, 1.0) == a`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::Float;
+    ///
+    /// assert_eq!(0.0.lerp(10.0, 0.0), 0.0);
+    /// assert_eq!(0.0.lerp(10.0, 0.5), 5.0);
+    /// assert_eq!(0.0.lerp(10.0, 1.0), 10.0);
+    /// ```
+    fn lerp(self, b: Self, t: Self) -> Self;
 }
 
 impl<T: num::Float> Float for T {
@@ -104,5 +122,9 @@ impl<T: num::Float> Float for T {
 
     fn degrees(self) -> Self {
         self * T::from(180.0 / f64::consts::PI).unwrap()
+    }
+
+    fn lerp(self, b: Self, t: Self) -> Self {
+        (T::one()-t)*self + t*b
     }
 }

@@ -6,7 +6,7 @@ pub use num::{Zero, One};
 use super::float::Float;
 use std::fmt;
 
-/// Vec3 is a generic three-component (2D) vector type.
+/// Vec3 is a generic three-component (3D) vector type.
 ///
 /// The equality operator (==) on a vector is defined differently depending on
 /// the type. If the type T is a floating-point number type; equality is defined

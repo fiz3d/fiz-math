@@ -251,6 +251,25 @@ impl<T: Div<Output = T>> Div for Vec2<T>{
     }
 }
 
+impl<T: Div<Output = T> + Copy> Vec2<T> {
+    /// div_scalar performs scalar division on a vector.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::Vec2;
+    ///
+    /// let a = Vec2::new(2, 4);
+    /// assert_eq!(a.div_scalar(2), Vec2::new(1, 2));
+    /// ```
+    pub fn div_scalar(self, _rhs: T) -> Vec2<T> {
+        Vec2{
+            x: self.x / _rhs,
+            y: self.y / _rhs,
+        }
+    }
+}
+
 // Different implementations are needed for PartialEq for float (relative
 // equality) vs integer types (binary equality). For this reason we must use a
 // macro for the separate implementations for each concrete type.

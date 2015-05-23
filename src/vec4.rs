@@ -165,6 +165,27 @@ impl<T: Sub<Output = T>> Sub for Vec4<T>{
     }
 }
 
+impl<T: Sub<Output = T> + Copy> Vec4<T> {
+    /// sub_scalar performs scalar subtraction on a vector.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::Vec4;
+    ///
+    /// let a = Vec4::new(2, 3, 4, 5);
+    /// assert_eq!(a.sub_scalar(1), Vec4::new(1, 2, 3, 4));
+    /// ```
+    pub fn sub_scalar(self, _rhs: T) -> Vec4<T> {
+        Vec4{
+            x: self.x - _rhs,
+            y: self.y - _rhs,
+            z: self.z - _rhs,
+            w: self.w - _rhs,
+        }
+    }
+}
+
 impl<T: Mul<Output = T>> Mul for Vec4<T>{
     type Output = Vec4<T>;
 

@@ -210,6 +210,25 @@ impl<T: Mul<Output = T>> Mul for Vec2<T>{
     }
 }
 
+impl<T: Mul<Output = T> + Copy> Vec2<T> {
+    /// mul_scalar performs scalar multiplication on a vector.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::Vec2;
+    ///
+    /// let a = Vec2::new(2, 3);
+    /// assert_eq!(a.mul_scalar(2), Vec2::new(4, 6));
+    /// ```
+    pub fn mul_scalar(self, _rhs: T) -> Vec2<T> {
+        Vec2{
+            x: self.x * _rhs,
+            y: self.y * _rhs,
+        }
+    }
+}
+
 impl<T: Div<Output = T>> Div for Vec2<T>{
     type Output = Vec2<T>;
 

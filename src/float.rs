@@ -83,7 +83,6 @@ pub trait Float: num::Float{
     /// ```
     fn degrees(self) -> Self;
 
-
     /// lerp performs a linear interpolation between `self` and `b`. The `t`
     /// parameter is a number in the range 0.0 - 1.0.
     ///

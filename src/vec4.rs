@@ -94,6 +94,29 @@ impl<T: Float> Vec4<T>{
         self.z.almost_equal(other.z, abs_tol) &&
         self.w.almost_equal(other.w, abs_tol)
     }
+
+    /// is_nan tells if all of this vectors components are NaN.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # extern crate num;
+    /// # extern crate fiz_math;
+    /// use num::traits::Float;
+    /// use fiz_math::Vec4;
+    ///
+    /// # fn main() {
+    /// let n:f32 = Float::nan();
+    /// assert!(Vec4::new(n, n, n, n).is_nan());
+    /// assert!(!Vec4::new(n, 0.0, 0.0, 0.0).is_nan());
+    /// # }
+    /// ```
+    pub fn is_nan(self) -> bool {
+        self.x.is_nan() &&
+        self.y.is_nan() &&
+        self.z.is_nan() &&
+        self.w.is_nan()
+    }
 }
 
 impl<T: Add<Output = T>> Add for Vec4<T>{

@@ -106,6 +106,28 @@ impl<T: Float> Vec3<T>{
         self.y.almost_equal(other.y, abs_tol) &&
         self.z.almost_equal(other.z, abs_tol)
     }
+
+    /// is_nan tells if all of this vectors components are NaN.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # extern crate num;
+    /// # extern crate fiz_math;
+    /// use num::traits::Float;
+    /// use fiz_math::Vec3;
+    ///
+    /// # fn main() {
+    /// let n:f32 = Float::nan();
+    /// assert!(Vec3::new(n, n, n).is_nan());
+    /// assert!(!Vec3::new(n, 0.0, 0.0).is_nan());
+    /// # }
+    /// ```
+    pub fn is_nan(self) -> bool {
+        self.x.is_nan() &&
+        self.y.is_nan() &&
+        self.z.is_nan()
+    }
 }
 
 impl<T: Add<Output = T>> Add for Vec3<T>{

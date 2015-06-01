@@ -34,7 +34,7 @@ impl<T> Vec3<T>{
     /// let x = fiz_math::Vec3::new(1u8, 5u8, 2u8);
     /// println!("{:?}", x);
     /// ```
-    pub fn new(x: T, y: T, z: T) -> Vec3<T> {
+    pub fn new(x: T, y: T, z: T) -> Self {
         Vec3{x: x, y: y, z: z}
     }
 }
@@ -101,7 +101,7 @@ impl<T: Float> Vec3<T>{
     /// assert!(a.almost_equal(b, 0.1000001));
     /// assert!(!a.almost_equal(b, 0.1));
     /// ```
-    pub fn almost_equal(self, other: Vec3<T>, abs_tol: T) -> bool {
+    pub fn almost_equal(self, other: Self, abs_tol: T) -> bool {
         self.x.almost_equal(other.x, abs_tol) &&
         self.y.almost_equal(other.y, abs_tol) &&
         self.z.almost_equal(other.z, abs_tol)
@@ -144,7 +144,7 @@ impl<T: Add<Output = T>> Add for Vec3<T>{
     /// let b = Vec3::new(4, 5, 6);
     /// assert_eq!(a + b, Vec3::new(5, 7, 9));
     /// ```
-    fn add(self, _rhs: Vec3<T>) -> Vec3<T> {
+    fn add(self, _rhs: Self) -> Self {
         Vec3{
             x: self.x + _rhs.x,
             y: self.y + _rhs.y,
@@ -164,7 +164,7 @@ impl<T: Add<Output = T> + Copy> Vec3<T> {
     /// let a = Vec3::new(1, 2, 3);
     /// assert_eq!(a.add_scalar(1), Vec3::new(2, 3, 4));
     /// ```
-    pub fn add_scalar(self, _rhs: T) -> Vec3<T> {
+    pub fn add_scalar(self, _rhs: T) -> Self {
         Vec3{
             x: self.x + _rhs,
             y: self.y + _rhs,
@@ -174,7 +174,7 @@ impl<T: Add<Output = T> + Copy> Vec3<T> {
 }
 
 impl<T: Sub<Output = T>> Sub for Vec3<T>{
-    type Output = Vec3<T>;
+    type Output = Self;
 
     /// sub performs component-wise subtraction of two vectors.
     ///
@@ -187,7 +187,7 @@ impl<T: Sub<Output = T>> Sub for Vec3<T>{
     /// let b = Vec3::new(4, 5, 6);
     /// assert_eq!(a - b, Vec3::new(-3, -3, -3));
     /// ```
-    fn sub(self, _rhs: Vec3<T>) -> Vec3<T> {
+    fn sub(self, _rhs: Self) -> Self {
         Vec3{
             x: self.x - _rhs.x,
             y: self.y - _rhs.y,
@@ -207,7 +207,7 @@ impl<T: Sub<Output = T> + Copy> Vec3<T> {
     /// let a = Vec3::new(2, 3, 4);
     /// assert_eq!(a.sub_scalar(1), Vec3::new(1, 2, 3));
     /// ```
-    pub fn sub_scalar(self, _rhs: T) -> Vec3<T> {
+    pub fn sub_scalar(self, _rhs: T) -> Self {
         Vec3{
             x: self.x - _rhs,
             y: self.y - _rhs,
@@ -217,7 +217,7 @@ impl<T: Sub<Output = T> + Copy> Vec3<T> {
 }
 
 impl<T: Mul<Output = T>> Mul for Vec3<T>{
-    type Output = Vec3<T>;
+    type Output = Self;
 
     /// mul performs component-wise multiplication of two vectors.
     ///
@@ -230,7 +230,7 @@ impl<T: Mul<Output = T>> Mul for Vec3<T>{
     /// let b = Vec3::new(4, 5, 6);
     /// assert_eq!(a * b, Vec3::new(4, 10, 18));
     /// ```
-    fn mul(self, _rhs: Vec3<T>) -> Vec3<T> {
+    fn mul(self, _rhs: Self) -> Self {
         Vec3{
             x: self.x * _rhs.x,
             y: self.y * _rhs.y,
@@ -250,7 +250,7 @@ impl<T: Mul<Output = T> + Copy> Vec3<T> {
     /// let a = Vec3::new(1, 2, 3);
     /// assert_eq!(a.mul_scalar(2), Vec3::new(2, 4, 6));
     /// ```
-    pub fn mul_scalar(self, _rhs: T) -> Vec3<T> {
+    pub fn mul_scalar(self, _rhs: T) -> Self {
         Vec3{
             x: self.x * _rhs,
             y: self.y * _rhs,
@@ -273,7 +273,7 @@ impl<T: Div<Output = T>> Div for Vec3<T>{
     /// let b = Vec3::new(1, 2, 3);
     /// assert_eq!(a / b, Vec3::new(4, 2, 3));
     /// ```
-    fn div(self, _rhs: Vec3<T>) -> Vec3<T> {
+    fn div(self, _rhs: Self) -> Self {
         Vec3{
             x: self.x / _rhs.x,
             y: self.y / _rhs.y,
@@ -293,7 +293,7 @@ impl<T: Div<Output = T> + Copy> Vec3<T> {
     /// let a = Vec3::new(2, 4, 6);
     /// assert_eq!(a.div_scalar(2), Vec3::new(1, 2, 3));
     /// ```
-    pub fn div_scalar(self, _rhs: T) -> Vec3<T> {
+    pub fn div_scalar(self, _rhs: T) -> Self {
         Vec3{
             x: self.x / _rhs,
             y: self.y / _rhs,
@@ -321,7 +321,7 @@ macro_rules! impl_floats {
             /// let b = Vec3::new(4.0, 5.0, 9.00000000000000000000001);
             /// assert_eq!(a, b);
             /// ```
-            fn eq(&self, _rhs: &Vec3<$ty>) -> bool {
+            fn eq(&self, _rhs: &Self) -> bool {
                 self.x.equal(_rhs.x) &&
                 self.y.equal(_rhs.y) &&
                 self.z.equal(_rhs.z)
@@ -380,7 +380,7 @@ macro_rules! impl_ints {
             /// assert_eq!(a, b);
             /// ```
             ///
-            fn eq(&self, _rhs: &Vec3<$ty>) -> bool {
+            fn eq(&self, _rhs: &Self) -> bool {
                 self.x == _rhs.x &&
                 self.y == _rhs.y &&
                 self.z == _rhs.z

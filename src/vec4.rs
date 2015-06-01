@@ -33,7 +33,7 @@ impl<T> Vec4<T>{
     /// ```
     /// let x = fiz_math::Vec4::new(1u8, 5u8, 2u8, 3u8);
     /// ```
-    pub fn new(x: T, y: T, z: T, w: T) -> Vec4<T> {
+    pub fn new(x: T, y: T, z: T, w: T) -> Self {
         Vec4{x: x, y: y, z: z, w: w}
     }
 }
@@ -88,7 +88,7 @@ impl<T: Float> Vec4<T>{
     /// assert!(a.almost_equal(b, 0.1000001));
     /// assert!(!a.almost_equal(b, 0.1));
     /// ```
-    pub fn almost_equal(self, other: Vec4<T>, abs_tol: T) -> bool {
+    pub fn almost_equal(self, other: Self, abs_tol: T) -> bool {
         self.x.almost_equal(other.x, abs_tol) &&
         self.y.almost_equal(other.y, abs_tol) &&
         self.z.almost_equal(other.z, abs_tol) &&
@@ -120,7 +120,7 @@ impl<T: Float> Vec4<T>{
 }
 
 impl<T: Add<Output = T>> Add for Vec4<T>{
-    type Output = Vec4<T>;
+    type Output = Self;
 
     /// add performs component-wise addition of two vectors.
     ///
@@ -133,7 +133,7 @@ impl<T: Add<Output = T>> Add for Vec4<T>{
     /// let b = Vec4::new(4, 5, 6, 6);
     /// assert_eq!(a + b, Vec4::new(5, 7, 9, 9));
     /// ```
-    fn add(self, _rhs: Vec4<T>) -> Vec4<T> {
+    fn add(self, _rhs: Self) -> Self {
         Vec4{
             x: self.x + _rhs.x,
             y: self.y + _rhs.y,
@@ -154,7 +154,7 @@ impl<T: Add<Output = T> + Copy> Vec4<T> {
     /// let a = Vec4::new(1, 2, 3, 4);
     /// assert_eq!(a.add_scalar(1), Vec4::new(2, 3, 4, 5));
     /// ```
-    pub fn add_scalar(self, _rhs: T) -> Vec4<T> {
+    pub fn add_scalar(self, _rhs: T) -> Self {
         Vec4{
             x: self.x + _rhs,
             y: self.y + _rhs,
@@ -165,7 +165,7 @@ impl<T: Add<Output = T> + Copy> Vec4<T> {
 }
 
 impl<T: Sub<Output = T>> Sub for Vec4<T>{
-    type Output = Vec4<T>;
+    type Output = Self;
 
     /// sub performs component-wise subtraction of two vectors.
     ///
@@ -178,7 +178,7 @@ impl<T: Sub<Output = T>> Sub for Vec4<T>{
     /// let b = Vec4::new(4, 5, 6, 6);
     /// assert_eq!(a - b, Vec4::new(-3, -3, -3, -3));
     /// ```
-    fn sub(self, _rhs: Vec4<T>) -> Vec4<T> {
+    fn sub(self, _rhs: Self) -> Self {
         Vec4{
             x: self.x - _rhs.x,
             y: self.y - _rhs.y,
@@ -199,7 +199,7 @@ impl<T: Sub<Output = T> + Copy> Vec4<T> {
     /// let a = Vec4::new(2, 3, 4, 5);
     /// assert_eq!(a.sub_scalar(1), Vec4::new(1, 2, 3, 4));
     /// ```
-    pub fn sub_scalar(self, _rhs: T) -> Vec4<T> {
+    pub fn sub_scalar(self, _rhs: T) -> Self {
         Vec4{
             x: self.x - _rhs,
             y: self.y - _rhs,
@@ -210,7 +210,7 @@ impl<T: Sub<Output = T> + Copy> Vec4<T> {
 }
 
 impl<T: Mul<Output = T>> Mul for Vec4<T>{
-    type Output = Vec4<T>;
+    type Output = Self;
 
     /// mul performs component-wise multiplication of two vectors.
     ///
@@ -223,7 +223,7 @@ impl<T: Mul<Output = T>> Mul for Vec4<T>{
     /// let b = Vec4::new(4, 5, 6, 6);
     /// assert_eq!(a * b, Vec4::new(4, 10, 18, 18));
     /// ```
-    fn mul(self, _rhs: Vec4<T>) -> Vec4<T> {
+    fn mul(self, _rhs: Self) -> Self {
         Vec4{
             x: self.x * _rhs.x,
             y: self.y * _rhs.y,
@@ -244,7 +244,7 @@ impl<T: Mul<Output = T> + Copy> Vec4<T> {
     /// let a = Vec4::new(1, 2, 3, 4);
     /// assert_eq!(a.mul_scalar(2), Vec4::new(2, 4, 6, 8));
     /// ```
-    pub fn mul_scalar(self, _rhs: T) -> Vec4<T> {
+    pub fn mul_scalar(self, _rhs: T) -> Self {
         Vec4{
             x: self.x * _rhs,
             y: self.y * _rhs,
@@ -255,7 +255,7 @@ impl<T: Mul<Output = T> + Copy> Vec4<T> {
 }
 
 impl<T: Div<Output = T>> Div for Vec4<T>{
-    type Output = Vec4<T>;
+    type Output = Self;
 
     /// div performs component-wise division of two vectors.
     ///
@@ -268,7 +268,7 @@ impl<T: Div<Output = T>> Div for Vec4<T>{
     /// let b = Vec4::new(1, 2, 3, 3);
     /// assert_eq!(a / b, Vec4::new(4, 2, 3, 3));
     /// ```
-    fn div(self, _rhs: Vec4<T>) -> Vec4<T> {
+    fn div(self, _rhs: Self) -> Self {
         Vec4{
             x: self.x / _rhs.x,
             y: self.y / _rhs.y,
@@ -289,7 +289,7 @@ impl<T: Div<Output = T> + Copy> Vec4<T> {
     /// let a = Vec4::new(2, 4, 6, 8);
     /// assert_eq!(a.div_scalar(2), Vec4::new(1, 2, 3, 4));
     /// ```
-    pub fn div_scalar(self, _rhs: T) -> Vec4<T> {
+    pub fn div_scalar(self, _rhs: T) -> Self {
         Vec4{
             x: self.x / _rhs,
             y: self.y / _rhs,
@@ -318,7 +318,7 @@ macro_rules! impl_floats {
             /// let b = Vec4::new(4.0, 5.0, 5.0, 9.00000000000000000000001);
             /// assert_eq!(a, b);
             /// ```
-            fn eq(&self, _rhs: &Vec4<$ty>) -> bool {
+            fn eq(&self, _rhs: &Self) -> bool {
                 self.x.equal(_rhs.x) &&
                 self.y.equal(_rhs.y) &&
                 self.z.equal(_rhs.z) &&
@@ -378,7 +378,7 @@ macro_rules! impl_ints {
             /// assert_eq!(a, b);
             /// ```
             ///
-            fn eq(&self, _rhs: &Vec4<$ty>) -> bool {
+            fn eq(&self, _rhs: &Self) -> bool {
                 self.x == _rhs.x &&
                 self.y == _rhs.y &&
                 self.z == _rhs.z &&

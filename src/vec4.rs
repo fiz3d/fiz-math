@@ -325,41 +325,6 @@ macro_rules! impl_floats {
                 self.w.equal(_rhs.w)
             }
         }
-
-        impl Zero for Vec4<$ty>{
-            /// zero returns the zero-value for the vector.
-            ///
-            /// # Examples
-            ///
-            /// ```
-            /// use fiz_math::Zero;
-            ///
-            /// let x = fiz_math::Vec4::<f32>::zero();
-            /// ```
-            ///
-            /// ```
-            /// use fiz_math::Zero;
-            ///
-            /// let x = fiz_math::Vec4::<f64>::zero();
-            /// ```
-            fn zero() -> Self {
-                Vec4{x: 0.0, y: 0.0, z: 0.0, w: 0.0}
-            }
-
-            /// is_zero tests if the vector is equal to zero.
-            ///
-            /// # Examples
-            ///
-            /// ```
-            /// use fiz_math::Zero;
-            ///
-            /// let x = fiz_math::Vec4::new(1.0, 0.0, 0.0, 0.0);
-            /// assert!(!x.is_zero())
-            /// ```
-            fn is_zero(&self) -> bool {
-                *self == Vec4::<$ty>::zero()
-            }
-        }
     )*);
 }
 
@@ -383,41 +348,6 @@ macro_rules! impl_ints {
                 self.y == _rhs.y &&
                 self.z == _rhs.z &&
                 self.w == _rhs.w
-            }
-        }
-
-        impl Zero for Vec4<$ty>{
-            /// zero returns the zero-value for the vector.
-            ///
-            /// # Examples
-            ///
-            /// ```
-            /// use fiz_math::Zero;
-            ///
-            /// let x = fiz_math::Vec4::<u8>::zero();
-            /// ```
-            ///
-            /// ```
-            /// use fiz_math::Zero;
-            ///
-            /// let x = fiz_math::Vec4::<i64>::zero();
-            /// ```
-            fn zero() -> Self {
-                Vec4{x: 0, y: 0, z: 0, w: 0}
-            }
-
-            /// is_zero tests if the vector is equal to zero.
-            ///
-            /// # Examples
-            ///
-            /// ```
-            /// use fiz_math::Zero;
-            ///
-            /// let x = fiz_math::Vec4::new(1, 0, 0, 0);
-            /// assert!(!x.is_zero())
-            /// ```
-            fn is_zero(&self) -> bool {
-                *self == Vec4::<$ty>::zero()
             }
         }
     )*);
@@ -446,6 +376,40 @@ macro_rules! impl_all {
                 } else {
                     None
                 }
+            }
+        }
+
+        impl Zero for Vec4<$ty>{
+            /// zero returns the zero-value for the vector.
+            ///
+            /// # Examples
+            ///
+            /// ```
+            /// use fiz_math::{Zero, Vec4};
+            ///
+            /// let x = Vec4::<u8>::zero();
+            /// let y = Vec4::<i64>::zero();
+            /// let z = Vec4::<f32>::zero();
+            /// let w = Vec4::<f64>::zero();
+            /// ```
+            fn zero() -> Self {
+                Vec4{x: Zero::zero(), y: Zero::zero(), z: Zero::zero(), w: Zero::zero()}
+            }
+
+            /// is_zero tests if the vector is equal to zero.
+            ///
+            /// # Examples
+            ///
+            /// ```
+            /// use fiz_math::{Zero, Vec4};
+            ///
+            /// assert!(!Vec4::new(1i32, 0, 0, 0).is_zero());
+            /// assert!(Vec4::new(0u8, 0, 0, 0).is_zero());
+            /// assert!(!Vec4::new(1.0f32, 0.0, 0.0, 0.0).is_zero());
+            /// assert!(Vec4::new(0.0f64, 0.0, 0.0, 0.0).is_zero());
+            /// ```
+            fn is_zero(&self) -> bool {
+                *self == Vec4::<$ty>::zero()
             }
         }
     )*);

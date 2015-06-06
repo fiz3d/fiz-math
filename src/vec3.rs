@@ -327,41 +327,6 @@ macro_rules! impl_floats {
                 self.z.equal(_rhs.z)
             }
         }
-
-        impl Zero for Vec3<$ty>{
-            /// zero returns the zero-value for the vector.
-            ///
-            /// # Examples
-            ///
-            /// ```
-            /// use fiz_math::Zero;
-            ///
-            /// let x = fiz_math::Vec3::<f32>::zero();
-            /// ```
-            ///
-            /// ```
-            /// use fiz_math::Zero;
-            ///
-            /// let x = fiz_math::Vec3::<f64>::zero();
-            /// ```
-            fn zero() -> Self {
-                Vec3{x: 0.0, y: 0.0, z: 0.0}
-            }
-
-            /// is_zero tests if the vector is equal to zero.
-            ///
-            /// # Examples
-            ///
-            /// ```
-            /// use fiz_math::Zero;
-            ///
-            /// let x = fiz_math::Vec3::new(1.0, 0.0, 0.0);
-            /// assert!(!x.is_zero())
-            /// ```
-            fn is_zero(&self) -> bool {
-                *self == Vec3::<$ty>::zero()
-            }
-        }
     )*);
 }
 
@@ -384,41 +349,6 @@ macro_rules! impl_ints {
                 self.x == _rhs.x &&
                 self.y == _rhs.y &&
                 self.z == _rhs.z
-            }
-        }
-
-        impl Zero for Vec3<$ty>{
-            /// zero returns the zero-value for the vector.
-            ///
-            /// # Examples
-            ///
-            /// ```
-            /// use fiz_math::Zero;
-            ///
-            /// let x = fiz_math::Vec3::<u8>::zero();
-            /// ```
-            ///
-            /// ```
-            /// use fiz_math::Zero;
-            ///
-            /// let x = fiz_math::Vec3::<i64>::zero();
-            /// ```
-            fn zero() -> Self {
-                Vec3{x: 0, y: 0, z: 0}
-            }
-
-            /// is_zero tests if the vector is equal to zero.
-            ///
-            /// # Examples
-            ///
-            /// ```
-            /// use fiz_math::Zero;
-            ///
-            /// let x = fiz_math::Vec3::new(1, 0, 0);
-            /// assert!(!x.is_zero())
-            /// ```
-            fn is_zero(&self) -> bool {
-                *self == Vec3::<$ty>::zero()
             }
         }
     )*);
@@ -447,6 +377,40 @@ macro_rules! impl_all {
                 } else {
                     None
                 }
+            }
+        }
+
+        impl Zero for Vec3<$ty>{
+            /// zero returns the zero-value for the vector.
+            ///
+            /// # Examples
+            ///
+            /// ```
+            /// use fiz_math::{Zero, Vec3};
+            ///
+            /// let x = Vec3::<u8>::zero();
+            /// let y = Vec3::<i64>::zero();
+            /// let z = Vec3::<f32>::zero();
+            /// let w = Vec3::<f64>::zero();
+            /// ```
+            fn zero() -> Self {
+                Vec3{x: Zero::zero(), y: Zero::zero(), z: Zero::zero()}
+            }
+
+            /// is_zero tests if the vector is equal to zero.
+            ///
+            /// # Examples
+            ///
+            /// ```
+            /// use fiz_math::{Zero, Vec3};
+            ///
+            /// assert!(!Vec3::new(1i32, 0, 0).is_zero());
+            /// assert!(Vec3::new(0u8, 0, 0).is_zero());
+            /// assert!(!Vec3::new(1.0f32, 0.0, 0.0).is_zero());
+            /// assert!(Vec3::new(0.0f64, 0.0, 0.0).is_zero());
+            /// ```
+            fn is_zero(&self) -> bool {
+                *self == Vec3::<$ty>::zero()
             }
         }
     )*);

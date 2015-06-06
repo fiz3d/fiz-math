@@ -321,6 +321,22 @@ impl<T:PartialOrd> Vec4<T> {
         let o = other.as_ref();
         self.x < o.x || self.y < o.y || self.z < o.z || self.w < o.w
     }
+
+    /// any_greater tells if any component of the other vector is greater than
+    /// any component of this vector.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::Vec4;
+    ///
+    /// let a = Vec4::new(0, 0, 0, 2);
+    /// assert!(a.any_greater(Vec4::new(0, 0, 0, 1)));
+    /// ```
+    pub fn any_greater<O:AsRef<Self>>(&self, other: O) -> bool {
+        let o = other.as_ref();
+        self.x > o.x || self.y > o.y || self.z > o.z || self.w > o.w
+    }
 }
 
 // Different implementations are needed for PartialEq for float (relative

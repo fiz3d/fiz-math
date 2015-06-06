@@ -299,6 +299,30 @@ impl<T: Div<Output = T> + Copy> Vec4<T> {
     }
 }
 
+impl<T> AsRef<Vec4<T>> for Vec4<T> {
+    fn as_ref(&self) -> &Self {
+        self
+    }
+}
+
+impl<T:PartialOrd> Vec4<T> {
+    /// any_less tells if any component of the other vector is less than any
+    /// component of this vector.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::Vec4;
+    ///
+    /// let a = Vec4::new(0, 0, 0, 1);
+    /// assert!(a.any_less(Vec4::new(0, 0, 0, 2)));
+    /// ```
+    pub fn any_less<O:AsRef<Self>>(&self, other: O) -> bool {
+        let o = other.as_ref();
+        self.x < o.x || self.y < o.y || self.z < o.z || self.w < o.w
+    }
+}
+
 // Different implementations are needed for PartialEq for float (relative
 // equality) vs integer types (binary equality). For this reason we must use a
 // macro for the separate implementations for each concrete type.

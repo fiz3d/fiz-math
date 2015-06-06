@@ -1,7 +1,7 @@
 #![allow(dead_code)]
 
 use std::ops::{Add, Sub, Mul, Div};
-use std::cmp::PartialEq;
+use std::cmp::{PartialEq, PartialOrd, Ordering};
 pub use num::{Zero, One};
 use super::float::Float;
 use std::fmt;
@@ -424,5 +424,34 @@ macro_rules! impl_ints {
     )*);
 }
 
+macro_rules! impl_all {
+    ($($ty:ty),*) => ($(
+        impl PartialOrd for Vec3<$ty>{
+            /// partial_cmp compares the two vectors component-wise.
+            ///
+            /// # Examples
+            ///
+            /// ```
+            /// use fiz_math::Vec3;
+            ///
+            /// let a = Vec3::new(1.0, 2.0, 3.0);
+            /// assert!(a < Vec3::new(1.1, 2.1, 3.1));
+            /// ```
+            fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+                if self.x < other.x && self.y < other.y && self.z < other.z {
+                    Some(Ordering::Less)
+                } else if self.x > other.x && self.y > other.y && self.z > other.z {
+                    Some(Ordering::Greater)
+                } else if self == other {
+                    Some(Ordering::Equal)
+                } else {
+                    None
+                }
+            }
+        }
+    )*);
+}
+
 impl_floats! { f32, f64 }
 impl_ints! { i8, u8, i16, u16, i32, u32, i64, u64, isize, usize }
+impl_all! { f32, f64, i8, u8, i16, u16, i32, u32, i64, u64, isize, usize }

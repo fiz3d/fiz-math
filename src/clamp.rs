@@ -1,6 +1,6 @@
-extern crate num;
-
 pub trait Clamp{
+    type Elem;
+
     /// clamp returns the value v clamped to the range of [min, max].
     ///
     /// # Examples
@@ -24,13 +24,15 @@ pub trait Clamp{
     /// assert_eq!((-10).clamp(0, 10), 0);
     /// assert_eq!(0.clamp(1, 10), 1);
     /// ```
-    fn clamp(self, min: Self, max: Self) -> Self;
+    fn clamp(self, min: Self::Elem, max: Self::Elem) -> Self;
 }
 
 macro_rules! impl_clamp_floats {
     ($($ty:ty),*) => ($(
         impl Clamp for $ty {
-            fn clamp(self, min: Self, max: Self) -> Self {
+            type Elem = $ty;
+
+            fn clamp(self, min: $ty, max: $ty) -> Self {
                 self.min(max).max(min)
             }
         }
@@ -40,7 +42,9 @@ macro_rules! impl_clamp_floats {
 macro_rules! impl_clamp_ints {
     ($($ty:ty),*) => ($(
         impl Clamp for $ty {
-            fn clamp(self, min: Self, max: Self) -> Self {
+            type Elem = $ty;
+
+            fn clamp(self, min: $ty, max: $ty) -> Self {
                 if self < min {
                     min
                 } else if self > max {

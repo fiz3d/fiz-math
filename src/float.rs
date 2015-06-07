@@ -1,7 +1,6 @@
 extern crate num;
 
 use std::f64;
-use clamp::Clamp;
 
 /// The default epsilon value used for floating point comparisons.
 pub static EPSILON:f64 = 1.0E-8;

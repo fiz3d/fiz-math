@@ -1,6 +1,7 @@
 extern crate num;
 
 use std::f64;
+use clamp::Clamp;
 
 /// The default epsilon value used for floating point comparisons.
 pub static EPSILON:f64 = 1.0E-8;
@@ -37,25 +38,6 @@ pub trait Float: num::Float{
     /// assert!(!0.9.equal(1.0));
     /// ```
     fn equal(self, y: Self) -> bool;
-
-    /// clamp returns the value v clamped to the range of [min, max].
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use fiz_math::Float;
-    ///
-    /// assert_eq!(1.1.clamp(0.0, 1.0), 1.0);
-    /// assert_eq!(2.0.clamp(0.0, 1.5), 1.5);
-    /// ```
-    ///
-    /// ```
-    /// use fiz_math::Float;
-    ///
-    /// assert_eq!((-1.0).clamp(0.0, 1.0), 0.0);
-    /// assert_eq!(0.0.clamp(0.1, 1.0), 0.1);
-    /// ```
-    fn clamp(self, min: Self, max: Self) -> Self;
 
     /// radians converts the value `self` (presumed to be in degrees) to radians.
     ///
@@ -109,10 +91,6 @@ impl<T: num::Float> Float for T {
 
     fn equal(self, y: T) -> bool {
         self.almost_equal(y, T::from(EPSILON).unwrap())
-    }
-
-    fn clamp(self, min: Self, max: Self) -> Self {
-        self.min(max).max(min)
     }
 
     fn radians(self) -> Self {

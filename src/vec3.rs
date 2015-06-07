@@ -5,6 +5,7 @@ use std::cmp::{PartialEq, PartialOrd, Ordering};
 pub use num::{Zero, One};
 use super::float::Float;
 use std::fmt;
+use clamp::Clamp;
 
 /// Vec3 is a generic three-component (3D) vector type.
 ///
@@ -298,6 +299,29 @@ impl<T: Div<Output = T> + Copy> Vec3<T> {
             x: self.x / _rhs,
             y: self.y / _rhs,
             z: self.z / _rhs,
+        }
+    }
+}
+
+impl<T: Clamp<Elem = T> + Copy> Clamp for Vec3<T>{
+    type Elem = T;
+
+    /// clamp returns the vector with each element clamped to the range of
+    /// [min, max].
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::{Vec3, Clamp};
+    ///
+    /// let a = Vec3::new(-2, 4, -6);
+    /// assert_eq!(a.clamp(-1, 2), Vec3::new(-1, 2, -1));
+    /// ```
+    fn clamp(self, min: T, max: T) -> Self {
+        Vec3{
+            x: self.x.clamp(min, max),
+            y: self.y.clamp(min, max),
+            z: self.z.clamp(min, max),
         }
     }
 }

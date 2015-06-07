@@ -5,6 +5,7 @@ use std::cmp::{PartialEq, PartialOrd, Ordering};
 pub use num::{Zero, One};
 use super::float::Float;
 use std::fmt;
+use clamp::Clamp;
 
 /// Vec4 is a generic four-component (3D) vector type.
 ///
@@ -295,6 +296,30 @@ impl<T: Div<Output = T> + Copy> Vec4<T> {
             y: self.y / _rhs,
             z: self.z / _rhs,
             w: self.w / _rhs,
+        }
+    }
+}
+
+impl<T: Clamp<Elem = T> + Copy> Clamp for Vec4<T>{
+    type Elem = T;
+
+    /// clamp returns the vector with each element clamped to the range of
+    /// [min, max].
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::{Vec4, Clamp};
+    ///
+    /// let a = Vec4::new(-2, 4, -6, 8);
+    /// assert_eq!(a.clamp(-1, 2), Vec4::new(-1, 2, -1, 2));
+    /// ```
+    fn clamp(self, min: T, max: T) -> Self {
+        Vec4{
+            x: self.x.clamp(min, max),
+            y: self.y.clamp(min, max),
+            z: self.z.clamp(min, max),
+            w: self.w.clamp(min, max),
         }
     }
 }

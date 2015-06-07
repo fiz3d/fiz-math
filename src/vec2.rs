@@ -5,6 +5,7 @@ use std::cmp::{PartialEq, PartialOrd, Ordering};
 pub use num::{Zero, One};
 use super::float::Float;
 use std::fmt;
+use clamp::Clamp;
 
 /// Vec2 is a generic two-component vector type.
 ///
@@ -287,6 +288,28 @@ impl<T: Div<Output = T> + Copy> Vec2<T> {
         Vec2{
             x: self.x / _rhs,
             y: self.y / _rhs,
+        }
+    }
+}
+
+impl<T: Clamp<Elem = T> + Copy> Clamp for Vec2<T>{
+    type Elem = T;
+
+    /// clamp returns the vector with each element clamped to the range of
+    /// [min, max].
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::{Vec2, Clamp};
+    ///
+    /// let a = Vec2::new(-2, 4);
+    /// assert_eq!(a.clamp(-1, 2), Vec2::new(-1, 2));
+    /// ```
+    fn clamp(self, min: T, max: T) -> Self {
+        Vec2{
+            x: self.x.clamp(min, max),
+            y: self.y.clamp(min, max),
         }
     }
 }

@@ -50,6 +50,11 @@ macro_rules! unit {
         #[derive(Copy, Clone, Debug)]
         pub struct $ident<T>(pub T);
 
+        unit!(impl_std_ops, $ident);
+        unit!(impl_std_cmp, $ident);
+    };
+
+    (impl_std_ops, $ident:ident ) => {
         // addition
         impl<T: ::std::ops::Add<Output = T>> ::std::ops::Add for $ident<T> {
             type Output = Self;
@@ -141,7 +146,9 @@ macro_rules! unit {
 
             fn shr(self, rhs: usize) -> Self::Output { $ident(self.0 >> rhs) }
         }
+    };
 
+    (impl_std_cmp, $ident:ident ) => {
         // partial equality
         impl<T: ::std::cmp::PartialEq> ::std::cmp::PartialEq for $ident<T> {
             fn eq(&self, _rhs: &Self) -> bool {

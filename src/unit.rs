@@ -128,6 +128,13 @@ macro_rules! unit {
             fn bitxor(self, rhs: Self) -> Self::Output { $ident(self.0 ^ rhs.0) }
         }
 
+        // shift left
+        impl<T: ::std::ops::Shl<usize>> ::std::ops::Shl<usize> for $ident<T> {
+            type Output = $ident<T::Output>;
+
+            fn shl(self, rhs: usize) -> Self::Output { $ident(self.0 << rhs) }
+        }
+
         // partial equality
         impl<T: ::std::cmp::PartialEq> ::std::cmp::PartialEq for $ident<T> {
             fn eq(&self, _rhs: &Self) -> bool {

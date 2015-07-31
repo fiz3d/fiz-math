@@ -247,5 +247,15 @@ macro_rules! unit {
                 }
             }
         }
+
+        // checked subtraction
+        impl<T: $crate::num_export::traits::CheckedSub<Output = T>> $crate::num_export::traits::CheckedSub for $ident<T> {
+            fn checked_sub(&self, _rhs: &Self) -> Option<Self> {
+                match self.0.checked_sub(&_rhs.0) {
+                    Some(x) => { Some($ident(x)) }
+                    None => { None }
+                }
+            }
+        }
     };
 }

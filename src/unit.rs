@@ -52,6 +52,7 @@ macro_rules! unit {
 
         unit!(impl_std_ops, $ident);
         unit!(impl_std_cmp, $ident);
+        unit!(impl_num_traits, $ident);
     };
 
     (impl_std_ops, $ident:ident ) => {
@@ -185,6 +186,13 @@ macro_rules! unit {
                     ::std::cmp::Ordering::Equal
                 }
             }
+        }
+    };
+
+    (impl_num_traits, $ident:ident ) => {
+        impl<T: $crate::num_export::traits::Zero> $crate::num_export::traits::Zero for $ident<T> {
+            fn zero() -> Self { $ident(T::zero()) }
+            fn is_zero(&self) -> bool { self.0.is_zero() }
         }
     };
 }

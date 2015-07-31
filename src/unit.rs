@@ -121,6 +121,13 @@ macro_rules! unit {
             fn bitor(self, rhs: Self) -> Self::Output { $ident(self.0 | rhs.0) }
         }
 
+        // bitwise xor
+        impl<T: ::std::ops::BitXor<Output = T>> ::std::ops::BitXor for $ident<T> {
+            type Output = Self;
+
+            fn bitxor(self, rhs: Self) -> Self::Output { $ident(self.0 ^ rhs.0) }
+        }
+
         // partial equality
         impl<T: ::std::cmp::PartialEq> ::std::cmp::PartialEq for $ident<T> {
             fn eq(&self, _rhs: &Self) -> bool {

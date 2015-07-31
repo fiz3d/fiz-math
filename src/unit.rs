@@ -237,5 +237,15 @@ macro_rules! unit {
             fn min_value() -> Self { $ident(T::min_value()) }
             fn max_value() -> Self { $ident(T::max_value()) }
         }
+
+        // checked addition
+        impl<T: $crate::num_export::traits::CheckedAdd<Output = T>> $crate::num_export::traits::CheckedAdd for $ident<T> {
+            fn checked_add(&self, _rhs: &Self) -> Option<Self> {
+                match self.0.checked_add(&_rhs.0) {
+                    Some(x) => { Some($ident(x)) }
+                    None => { None }
+                }
+            }
+        }
     };
 }

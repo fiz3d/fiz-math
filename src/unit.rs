@@ -44,6 +44,47 @@
 /// }
 /// ```
 ///
+/// ```
+/// #[macro_use(unit)]
+/// extern crate fiz_math;
+/// extern crate num;
+///
+/// use num::traits::*;
+/// use std::ops::*;
+/// use std::cmp::*;
+///
+/// // check_impl defines a function (of the same name as the trait) whose
+/// // single parameter is bound by the named trait, thus validating that a type
+/// // does indeed implement a trait.
+/// macro_rules! check_impl {
+///     ($($name:ident),*) => ($(
+///         #[allow(unused_variables)]
+///         #[allow(non_snake_case)]
+///         fn $name<T: $name>(x: T) {
+///         }
+///     )*);
+/// }
+///
+/// check_impl!(Num, Float, PrimInt);
+///
+/// // Define our unit type.
+/// unit!(MyUnit);
+///
+/// fn main() {
+///     // All unit! implement the Num, Float, and PrimInt traits:
+///     Num(MyUnit(0u8));
+///     Num(MyUnit(0i32));
+///     Num(MyUnit(0f32));
+///
+///     Float(MyUnit(0.0f32));
+///     Float(MyUnit(0.0f64));
+///
+///     PrimInt(MyUnit(0u8));
+///     PrimInt(MyUnit(0i32));
+///     PrimInt(MyUnit(0isize));
+/// }
+/// ```
+///
 #[macro_export]
 macro_rules! unit {
     ( $ident:ident ) => {

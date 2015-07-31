@@ -232,5 +232,10 @@ macro_rules! unit {
                 }
             }
         }
+
+        impl<T: $crate::num_export::traits::Bounded> $crate::num_export::traits::Bounded for $ident<T> {
+            fn min_value() -> Self { $ident(T::min_value()) }
+            fn max_value() -> Self { $ident(T::max_value()) }
+        }
     };
 }

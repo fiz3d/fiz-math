@@ -257,5 +257,15 @@ macro_rules! unit {
                 }
             }
         }
+
+        // checked multiplication
+        impl<T: $crate::num_export::traits::CheckedMul<Output = T>> $crate::num_export::traits::CheckedMul for $ident<T> {
+            fn checked_mul(&self, _rhs: &Self) -> Option<Self> {
+                match self.0.checked_mul(&_rhs.0) {
+                    Some(x) => { Some($ident(x)) }
+                    None => { None }
+                }
+            }
+        }
     };
 }

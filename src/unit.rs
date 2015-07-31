@@ -86,6 +86,13 @@ macro_rules! unit {
             }
         }
 
+        // remainder
+        impl<T: ::std::ops::Rem<Output = T>> ::std::ops::Rem for $ident<T> {
+            type Output = Self;
+
+            fn rem(self, rhs: Self) -> Self { $ident(self.0 % rhs.0) }
+        }
+
         // partial equality
         impl<T: ::std::cmp::PartialEq> ::std::cmp::PartialEq for $ident<T> {
             fn eq(&self, _rhs: &Self) -> bool {

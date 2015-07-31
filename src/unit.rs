@@ -135,6 +135,13 @@ macro_rules! unit {
             fn shl(self, rhs: usize) -> Self::Output { $ident(self.0 << rhs) }
         }
 
+        // shift right
+        impl<T: ::std::ops::Shr<usize>> ::std::ops::Shr<usize> for $ident<T> {
+            type Output = $ident<T::Output>;
+
+            fn shr(self, rhs: usize) -> Self::Output { $ident(self.0 >> rhs) }
+        }
+
         // partial equality
         impl<T: ::std::cmp::PartialEq> ::std::cmp::PartialEq for $ident<T> {
             fn eq(&self, _rhs: &Self) -> bool {

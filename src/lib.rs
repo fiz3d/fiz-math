@@ -8,7 +8,7 @@ mod vec3;
 mod vec4;
 mod float;
 mod clamp;
-pub mod unit;
+#[macro_use] pub mod unit;
 
 pub use num::{Zero, One};
 pub use self::vec2::{Vec2, Point2};

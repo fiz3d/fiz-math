@@ -267,5 +267,15 @@ macro_rules! unit {
                 }
             }
         }
+
+        // checked division
+        impl<T: $crate::num_export::traits::CheckedDiv<Output = T>> $crate::num_export::traits::CheckedDiv for $ident<T> {
+            fn checked_div(&self, _rhs: &Self) -> Option<Self> {
+                match self.0.checked_div(&_rhs.0) {
+                    Some(x) => { Some($ident(x)) }
+                    None => { None }
+                }
+            }
+        }
     };
 }

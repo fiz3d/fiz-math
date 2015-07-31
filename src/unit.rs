@@ -93,6 +93,13 @@ macro_rules! unit {
             fn rem(self, rhs: Self) -> Self { $ident(self.0 % rhs.0) }
         }
 
+        // negation
+        impl<T: ::std::ops::Neg<Output = T>> ::std::ops::Neg for $ident<T> {
+            type Output = Self;
+
+            fn neg(self) -> Self::Output { $ident(-self.0) }
+        }
+
         // partial equality
         impl<T: ::std::cmp::PartialEq> ::std::cmp::PartialEq for $ident<T> {
             fn eq(&self, _rhs: &Self) -> bool {

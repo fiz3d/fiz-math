@@ -10,7 +10,7 @@ mod float;
 mod clamp;
 #[macro_use] pub mod unit;
 
-pub use num::{Zero, One};
+pub use num::{Zero, One, Num};
 pub use self::vec2::{Vec2, Point2};
 pub use self::vec3::{Vec3, Point3};
 pub use self::vec4::Vec4;

@@ -107,6 +107,13 @@ macro_rules! unit {
             fn not(self) -> Self::Output { $ident(!self.0) }
         }
 
+        // bitwise and
+        impl<T: ::std::ops::BitAnd<Output = T>> ::std::ops::BitAnd for $ident<T> {
+            type Output = Self;
+
+            fn bitand(self, rhs: Self) -> Self::Output { $ident(self.0 & rhs.0) }
+        }
+
         // partial equality
         impl<T: ::std::cmp::PartialEq> ::std::cmp::PartialEq for $ident<T> {
             fn eq(&self, _rhs: &Self) -> bool {

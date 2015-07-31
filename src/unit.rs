@@ -54,6 +54,7 @@ macro_rules! unit {
         unit!(impl_std_cmp, $ident);
         unit!(impl_num_traits, $ident);
         unit!(impl_num_traits_Float, $ident);
+        unit!(impl_num_traits_PrimInt, $ident);
     };
 
     (impl_std_ops, $ident:ident ) => {
@@ -336,6 +337,23 @@ macro_rules! unit {
             fn acosh(self) -> Self { $ident(self.0.acosh()) }
             fn atanh(self) -> Self { $ident(self.0.atanh()) }
             fn integer_decode(self) -> (u64, i16, i8) { self.0.integer_decode() }
+        }
+    };
+
+    (impl_num_traits_PrimInt, $ident:ident ) => {
+        impl<T: $crate::num_export::traits::PrimInt> $crate::num_export::traits::PrimInt for $ident<T> {
+            fn count_ones(self) -> u32 { self.0.count_ones() }
+            fn count_zeros(self) -> u32 { self.0.count_zeros() }
+            fn leading_zeros(self) -> u32 { self.0.leading_zeros() }
+            fn trailing_zeros(self) -> u32 { self.0.trailing_zeros() }
+            fn rotate_left(self, n: u32) -> Self { $ident(self.0.rotate_left(n)) }
+            fn rotate_right(self, n: u32) -> Self { $ident(self.0.rotate_right(n)) }
+            fn swap_bytes(self) -> Self { $ident(self.0.swap_bytes()) }
+            fn from_be(x: Self) -> Self { $ident(T::from_be(x.0)) }
+            fn from_le(x: Self) -> Self { $ident(T::from_le(x.0)) }
+            fn to_be(self) -> Self { $ident(self.0.to_be()) }
+            fn to_le(self) -> Self { $ident(self.0.to_le()) }
+            fn pow(self, exp: u32) -> Self { $ident(self.0.pow(exp)) }
         }
     };
 }

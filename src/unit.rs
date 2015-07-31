@@ -14,14 +14,14 @@
 /// unit!(SilverCoins);
 ///
 /// fn collect<T: Debug>(coins: GoldCoins<T>) {
-///     println!("We've collected {:?} golden coins!", coins.v);
+///     println!("We've collected {:?} golden coins!", coins.0);
 /// }
 ///
 /// fn main() {
-///     let x = GoldCoins::new(5);
+///     let x = GoldCoins(5);
 ///     collect(x);
 ///
-///     let y = SilverCoins::new(6);
+///     let y = SilverCoins(6);
 ///
 ///     // Try uncommenting the line below and see:
 ///     //
@@ -30,17 +30,17 @@
 ///     //collect(y);
 ///
 ///     // add, subtract, multiply, divide:
-///     assert_eq!(y + SilverCoins::new(4), SilverCoins::new(10));
-///     assert_eq!(y - SilverCoins::new(3), SilverCoins::new(3));
-///     assert_eq!(y * SilverCoins::new(3), SilverCoins::new(18));
-///     assert_eq!(y / SilverCoins::new(2), SilverCoins::new(3));
+///     assert_eq!(y + SilverCoins(4), SilverCoins(10));
+///     assert_eq!(y - SilverCoins(3), SilverCoins(3));
+///     assert_eq!(y * SilverCoins(3), SilverCoins(18));
+///     assert_eq!(y / SilverCoins(2), SilverCoins(3));
 ///
 ///     // ordering and equality:
-///     assert!(y < SilverCoins::new(7));
-///     assert!(y > SilverCoins::new(5));
-///     assert!(y <= SilverCoins::new(6));
-///     assert!(y >= SilverCoins::new(6));
-///     assert!(y == SilverCoins::new(6));
+///     assert!(y < SilverCoins(7));
+///     assert!(y > SilverCoins(5));
+///     assert!(y <= SilverCoins(6));
+///     assert!(y >= SilverCoins(6));
+///     assert!(y == SilverCoins(6));
 /// }
 /// ```
 ///
@@ -48,23 +48,14 @@
 macro_rules! unit {
     ( $ident:ident ) => {
         #[derive(Copy, Clone, Debug)]
-        pub struct $ident<T>{
-            pub v: T,
-        }
-
-        // new
-        impl<T> $ident<T> {
-            pub fn new(v: T) -> Self {
-                $ident{v: v}
-            }
-        }
+        pub struct $ident<T>(pub T);
 
         // addition
         impl<T: ::std::ops::Add<Output = T>> ::std::ops::Add for $ident<T> {
             type Output = Self;
 
             fn add(self, _rhs: Self) -> Self {
-                $ident{v: self.v + _rhs.v}
+                $ident(self.0 + _rhs.0)
             }
         }
 
@@ -73,7 +64,7 @@ macro_rules! unit {
             type Output = Self;
 
             fn sub(self, _rhs: Self) -> Self {
-                $ident{v: self.v - _rhs.v}
+                $ident(self.0 - _rhs.0)
             }
         }
 
@@ -82,7 +73,7 @@ macro_rules! unit {
             type Output = Self;
 
             fn mul(self, _rhs: Self) -> Self {
-                $ident{v: self.v * _rhs.v}
+                $ident(self.0 * _rhs.0)
             }
         }
 
@@ -91,14 +82,14 @@ macro_rules! unit {
             type Output = Self;
 
             fn div(self, _rhs: Self) -> Self {
-                $ident{v: self.v / _rhs.v}
+                $ident(self.0 / _rhs.0)
             }
         }
 
         // partial equality
         impl<T: ::std::cmp::PartialEq> ::std::cmp::PartialEq for $ident<T> {
             fn eq(&self, _rhs: &Self) -> bool {
-                self.v == _rhs.v
+                self.0 == _rhs.0
             }
         }
 
@@ -108,9 +99,9 @@ macro_rules! unit {
         // partial ordering
         impl<T: ::std::cmp::PartialOrd> ::std::cmp::PartialOrd for $ident<T> {
             fn partial_cmp(&self, other: &Self) -> Option<::std::cmp::Ordering> {
-                if self.v < other.v {
+                if self.0 < other.0 {
                     Some(::std::cmp::Ordering::Less)
-                } else if self.v > other.v {
+                } else if self.0 > other.0 {
                     Some(::std::cmp::Ordering::Greater)
                 } else if self == other {
                     Some(::std::cmp::Ordering::Equal)
@@ -123,9 +114,9 @@ macro_rules! unit {
         // total ordering
         impl<T: ::std::cmp::Ord> ::std::cmp::Ord for $ident<T> {
             fn cmp(&self, other: &Self) -> ::std::cmp::Ordering {
-                if self.v < other.v {
+                if self.0 < other.0 {
                     ::std::cmp::Ordering::Less
-                } else if self.v > other.v {
+                } else if self.0 > other.0 {
                     ::std::cmp::Ordering::Greater
                 } else {
                     ::std::cmp::Ordering::Equal

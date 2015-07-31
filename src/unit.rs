@@ -198,5 +198,15 @@ macro_rules! unit {
         impl<T: $crate::num_export::traits::One> $crate::num_export::traits::One for $ident<T> {
             fn one() -> Self { $ident(T::one()) }
         }
+
+        impl<T: $crate::num_export::traits::Num> $crate::num_export::traits::Num for $ident<T> {
+            type FromStrRadixErr = T::FromStrRadixErr;
+            fn from_str_radix(str: &str, radix: u32) -> Result<Self, Self::FromStrRadixErr> {
+                match T::from_str_radix(str, radix) {
+                    Ok(x) => { Ok($ident(x)) }
+                    Err(e) => { Err(e) }
+                }
+            }
+        }
     };
 }

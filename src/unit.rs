@@ -223,5 +223,14 @@ macro_rules! unit {
             fn to_f32(&self) -> Option<f32> { self.0.to_f32() }
             fn to_f64(&self) -> Option<f64> { self.0.to_f64() }
         }
+
+        impl<T: $crate::num_export::traits::NumCast> $crate::num_export::traits::NumCast for $ident<T> {
+            fn from<X: $crate::num_export::traits::ToPrimitive>(n: X) -> Option<Self> {
+                match T::from(n) {
+                    Some(x) => { Some($ident(x)) }
+                    None => { None }
+                }
+            }
+        }
     };
 }

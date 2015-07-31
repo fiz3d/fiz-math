@@ -194,5 +194,9 @@ macro_rules! unit {
             fn zero() -> Self { $ident(T::zero()) }
             fn is_zero(&self) -> bool { self.0.is_zero() }
         }
+
+        impl<T: $crate::num_export::traits::One> $crate::num_export::traits::One for $ident<T> {
+            fn one() -> Self { $ident(T::one()) }
+        }
     };
 }

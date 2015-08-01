@@ -23,7 +23,7 @@ pub trait Float: num::Float{
     /// assert!(0.9.almost_equal(1.0, 0.1000001));
     /// assert!(0.9.almost_equal(1.0, 0.1));
     /// ```
-    fn almost_equal(self, y: Self, abs_tol: Self) -> bool;
+    fn almost_equal<T: Float>(self, y: Self, abs_tol: T) -> bool;
 
     /// equal is short-hand for `self.almost_equal(y, fiz_math::EPSILON)`.
     ///
@@ -83,9 +83,9 @@ pub trait Float: num::Float{
 }
 
 impl<T: num::Float> Float for T {
-    fn almost_equal(self, y: T, abs_tol: T) -> bool {
+    fn almost_equal<N: num::Float>(self, y: T, abs_tol: N) -> bool {
         let r = T::from(1.0).unwrap().max(self.abs().max(y.abs()));
-        self == y || ((self-y).abs() <= abs_tol * r)
+        self == y || ((self-y).abs() <= T::from(abs_tol).unwrap() * r)
     }
 
     fn equal(self, y: T) -> bool {

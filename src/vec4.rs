@@ -3,6 +3,7 @@
 use std::ops::{Add, Sub, Mul, Div};
 use std::cmp::{PartialEq, PartialOrd, Ordering};
 pub use num::{Zero, One};
+use num;
 use super::float::Float;
 use std::fmt;
 use clamp::Clamp;
@@ -35,7 +36,7 @@ impl<T> Vec4<T>{
     ///
     /// let x = Vec4::new(MM(1.0), MM(5.0), MM(2.0), MM(1.2));
     /// let y = Vec4::new(MM(1.0), MM(5.1), MM(1.9), MM(1.1));
-    /// assert!(x.almost_equal(y, MM(0.1)));
+    /// assert!(x.almost_equal(y, 0.1));
     /// ```
     pub fn new(x: T, y: T, z: T, w: T) -> Self {
         Vec4{x: x, y: y, z: z, w: w}
@@ -92,7 +93,7 @@ impl<T: Float> Vec4<T>{
     /// assert!(a.almost_equal(b, 0.1000001));
     /// assert!(!a.almost_equal(b, 0.1));
     /// ```
-    pub fn almost_equal(self, other: Self, abs_tol: T) -> bool {
+    pub fn almost_equal<N: num::Float>(self, other: Self, abs_tol: N) -> bool {
         self.x.almost_equal(other.x, abs_tol) &&
         self.y.almost_equal(other.y, abs_tol) &&
         self.z.almost_equal(other.z, abs_tol) &&

@@ -381,7 +381,9 @@ impl<T: PartialEq> PartialEq for Vec3<T> {
     /// assert_eq!(a, b);
     /// ```
     fn eq(&self, _rhs: &Self) -> bool {
-        self.x.eq(&_rhs.x) && self.y.eq(&_rhs.y) && self.z.eq(&_rhs.z)
+        self.x == _rhs.x &&
+        self.y == _rhs.y &&
+        self.z == _rhs.z
     }
 }
 
@@ -439,6 +441,8 @@ impl<T: Zero> Zero for Vec3<T>{
     /// assert!(Vec3::new(0.0f64, 0.0, 0.0).is_zero());
     /// ```
     fn is_zero(&self) -> bool {
-        self.x.is_zero() && self.y.is_zero() && self.z.is_zero()
+        self.x.is_zero() &&
+        self.y.is_zero() &&
+        self.z.is_zero()
     }
 }

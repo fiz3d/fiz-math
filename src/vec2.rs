@@ -8,12 +8,6 @@ use std::fmt;
 use clamp::Clamp;
 
 /// Vec2 is a generic two-component vector type.
-///
-/// The equality operator (==) on a vector is defined differently depending on
-/// the type. If the type T is a floating-point number type; equality is defined
-/// as near-equality via the almost_equal function. Otherwise if the type is a
-/// signed or unsigned integer type, equality is defined as a binary (i.e. 1:1
-/// identical) comparison.
 #[derive(Copy, Clone, Debug)]
 pub struct Vec2<T>{
     x: T,
@@ -354,118 +348,87 @@ impl<T:PartialOrd> Vec2<T> {
     }
 }
 
-// Different implementations are needed for PartialEq for float (relative
-// equality) vs integer types (binary equality). For this reason we must use a
-// macro for the separate implementations for each concrete type.
-
-macro_rules! impl_floats {
-    ($($ty:ty),*) => ($(
-        impl PartialEq for Vec2<$ty> {
-            /// eq tests for component-wise equality of two vectors, using the
-            /// equal function (i.e. almost_equal with the EPSILON constant).
-            ///
-            /// # Examples
-            ///
-            /// ```
-            /// use fiz_math::Vec2;
-            ///
-            /// let a = Vec2::new(4.0, 9.0);
-            /// let b = Vec2::new(4.0, 9.00000000000000000000001);
-            /// assert_eq!(a, b);
-            /// ```
-            fn eq(&self, _rhs: &Self) -> bool {
-                self.x.equal(_rhs.x) &&
-                self.y.equal(_rhs.y)
-            }
-        }
-    )*);
+impl<T: PartialEq> PartialEq for Vec2<T> {
+    /// eq tests for component-wise binary equality of two vectors.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::Vec2;
+    ///
+    /// let a = Vec2::new(4.0, 9.0);
+    /// let b = Vec2::new(4.0, 9.00000000000000000000001);
+    /// assert_eq!(a, b);
+    /// ```
+    ///
+    /// ```
+    /// use fiz_math::Vec2;
+    ///
+    /// let a = Vec2::new(4, 5);
+    /// let b = Vec2::new(4, 5);
+    /// assert_eq!(a, b);
+    /// ```
+    fn eq(&self, _rhs: &Self) -> bool {
+        self.x == _rhs.x &&
+        self.y == _rhs.y
+    }
 }
 
-macro_rules! impl_ints {
-    ($($ty:ty),*) => ($(
-        impl PartialEq for Vec2<$ty> {
-            /// eq tests for component-wise binary equality of two vectors.
-            ///
-            /// # Examples
-            ///
-            /// ```
-            /// use fiz_math::Vec2;
-            ///
-            /// let a = Vec2::new(4, 5);
-            /// let b = Vec2::new(4, 5);
-            /// assert_eq!(a, b);
-            /// ```
-            ///
-            fn eq(&self, _rhs: &Self) -> bool {
-                self.x == _rhs.x &&
-                self.y == _rhs.y
-            }
+impl<T: PartialOrd> PartialOrd for Vec2<T>{
+    /// partial_cmp compares the two vectors component-wise.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::Vec2;
+    ///
+    /// let a = Vec2::new(1.0, 2.0);
+    /// assert!(a < Vec2::new(1.1, 2.1));
+    /// ```
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        if self.x < other.x && self.y < other.y {
+            Some(Ordering::Less)
+        } else if self.x > other.x && self.y > other.y {
+            Some(Ordering::Greater)
+        } else if self == other {
+            Some(Ordering::Equal)
+        } else {
+            None
         }
-    )*);
+    }
 }
 
-macro_rules! impl_all {
-    ($($ty:ty),*) => ($(
-        impl PartialOrd for Vec2<$ty>{
-            /// partial_cmp compares the two vectors component-wise.
-            ///
-            /// # Examples
-            ///
-            /// ```
-            /// use fiz_math::Vec2;
-            ///
-            /// let a = Vec2::new(1.0, 2.0);
-            /// assert!(a < Vec2::new(1.1, 2.1));
-            /// ```
-            fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-                if self.x < other.x && self.y < other.y {
-                    Some(Ordering::Less)
-                } else if self.x > other.x && self.y > other.y {
-                    Some(Ordering::Greater)
-                } else if self == other {
-                    Some(Ordering::Equal)
-                } else {
-                    None
-                }
-            }
-        }
+impl<T: Zero> Zero for Vec2<T>{
+    /// zero returns the zero-value for the vector.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::{Zero, Vec2};
+    ///
+    /// let x = Vec2::<u8>::zero();
+    /// let y = Vec2::<i64>::zero();
+    /// let z = Vec2::<f32>::zero();
+    /// let w = Vec2::<f64>::zero();
+    /// ```
+    fn zero() -> Self {
+        Vec2{x: Zero::zero(), y: Zero::zero()}
+    }
 
-        impl Zero for Vec2<$ty>{
-            /// zero returns the zero-value for the vector.
-            ///
-            /// # Examples
-            ///
-            /// ```
-            /// use fiz_math::{Zero, Vec2};
-            ///
-            /// let x = Vec2::<u8>::zero();
-            /// let y = Vec2::<i64>::zero();
-            /// let z = Vec2::<f32>::zero();
-            /// let w = Vec2::<f64>::zero();
-            /// ```
-            fn zero() -> Self {
-                Vec2{x: Zero::zero(), y: Zero::zero()}
-            }
-
-            /// is_zero tests if the vector is equal to zero.
-            ///
-            /// # Examples
-            ///
-            /// ```
-            /// use fiz_math::{Zero, Vec2};
-            ///
-            /// assert!(!Vec2::new(1i32, 0).is_zero());
-            /// assert!(Vec2::new(0u8, 0).is_zero());
-            /// assert!(!Vec2::new(1.0f32, 0.0).is_zero());
-            /// assert!(Vec2::new(0.0f64, 0.0).is_zero());
-            /// ```
-            fn is_zero(&self) -> bool {
-                *self == Vec2::<$ty>::zero()
-            }
-        }
-    )*);
+    /// is_zero tests if the vector is equal to zero.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::{Zero, Vec2};
+    ///
+    /// assert!(!Vec2::new(1i32, 0).is_zero());
+    /// assert!(Vec2::new(0u8, 0).is_zero());
+    /// assert!(!Vec2::new(1.0f32, 0.0).is_zero());
+    /// assert!(Vec2::new(0.0f64, 0.0).is_zero());
+    /// ```
+    fn is_zero(&self) -> bool {
+        self.x.is_zero() &&
+        self.y.is_zero()
+    }
 }
-
-impl_floats! { f32, f64 }
-impl_ints! { i8, u8, i16, u16, i32, u32, i64, u64, isize, usize }
-impl_all! { f32, f64, i8, u8, i16, u16, i32, u32, i64, u64, isize, usize }

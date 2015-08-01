@@ -28,6 +28,15 @@ impl<T> Vec4<T>{
     /// ```
     /// let x = fiz_math::Vec4::new(1u8, 5u8, 2u8, 3u8);
     /// ```
+    ///
+    /// ```
+    /// use fiz_math::Vec4;
+    /// use fiz_math::dist::MM;
+    ///
+    /// let x = Vec4::new(MM(1.0), MM(5.0), MM(2.0), MM(1.2));
+    /// let y = Vec4::new(MM(1.0), MM(5.1), MM(1.9), MM(1.1));
+    /// assert!(x.almost_equal(y, MM(0.1)));
+    /// ```
     pub fn new(x: T, y: T, z: T, w: T) -> Self {
         Vec4{x: x, y: y, z: z, w: w}
     }

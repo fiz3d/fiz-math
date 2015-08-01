@@ -28,6 +28,15 @@ impl<T> Vec2<T>{
     /// let x = fiz_math::Vec2::new(1u8, 5u8);
     /// println!("{:?}", x);
     /// ```
+    ///
+    /// ```
+    /// use fiz_math::Vec2;
+    /// use fiz_math::dist::MM;
+    ///
+    /// let x = Vec2::new(MM(1.0), MM(5.0));
+    /// let y = Vec2::new(MM(1.0), MM(5.1));
+    /// assert!(x.almost_equal(y, MM(0.1)));
+    /// ```
     pub fn new(x: T, y: T) -> Self {
         Vec2{x: x, y: y}
     }

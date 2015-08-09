@@ -2,8 +2,8 @@
 name = "fiz-math"
 version = "0.0.11"
 authors = ["Stephen Gutekanst <stephen.gutekanst@gmail.com>"]
-description = "Linear algebra in two and three dimensions."
-homepage = "https://github.com/fiz3d/"
+description = "Game & graphics math in two and three dimensions."
+homepage = "https://fiz3d.org/crate/math"
 repository = "https://github.com/fiz3d/math"
 keywords = ["fiz", "math", "linear", "algebra", "3D"]
 license = "BSD-3-Clause"

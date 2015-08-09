@@ -1,6 +1,6 @@
 [package]
 name = "fiz-math"
-version = "0.0.1"
+version = "0.0.11"
 authors = ["Stephen Gutekanst <stephen.gutekanst@gmail.com>"]
 description = "Linear algebra in two and three dimensions."
 homepage = "https://github.com/fiz3d/"

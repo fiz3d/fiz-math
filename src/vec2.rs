@@ -32,7 +32,7 @@ impl<T> Vec2<T>{
     ///
     /// ```
     /// use fiz_math::Vec2;
-    /// use fiz_math::dist::MM;
+    /// use fiz_math::unit::MM;
     ///
     /// let x = Vec2::new(MM(1.0), MM(5.0));
     /// let y = Vec2::new(MM(1.0), MM(5.1));

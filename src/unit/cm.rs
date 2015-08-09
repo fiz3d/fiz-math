@@ -18,7 +18,7 @@ pub trait ToCM<T>{
 /// # Examples
 ///
 /// ```
-/// use fiz_math::dist::CM;
+/// use fiz_math::unit::CM;
 ///
 /// let x = CM(1.0);
 /// println!("{:?}", x);
@@ -31,7 +31,7 @@ impl<T: Num+NumCast> ToMM<T> for CM<T> {
     /// # Examples
     ///
     /// ```
-    /// use fiz_math::dist::{CM, MM, ToMM};
+    /// use fiz_math::unit::{CM, MM, ToMM};
     ///
     /// assert_eq!(CM(1.0).to_mm(), MM(10.0));
     /// ```
@@ -46,7 +46,7 @@ impl<T: Num+NumCast> ToCM<T> for CM<T> {
     /// # Examples
     ///
     /// ```
-    /// use fiz_math::dist::{CM, ToCM};
+    /// use fiz_math::unit::{CM, ToCM};
     ///
     /// assert_eq!(CM(1.0).to_cm(), CM(1.0));
     /// ```
@@ -61,7 +61,7 @@ impl<T: Num+NumCast> ToM<T> for CM<T> {
     /// # Examples
     ///
     /// ```
-    /// use fiz_math::dist::{CM, M, ToM};
+    /// use fiz_math::unit::{CM, M, ToM};
     ///
     /// assert_eq!(CM(100.0).to_m(), M(1.0));
     /// ```
@@ -76,7 +76,7 @@ impl<T: Num+NumCast> ToKM<T> for CM<T> {
     /// # Examples
     ///
     /// ```
-    /// use fiz_math::dist::{CM, KM, ToKM};
+    /// use fiz_math::unit::{CM, KM, ToKM};
     ///
     /// assert_eq!(CM(100000.0).to_km(), KM(1.0));
     /// ```

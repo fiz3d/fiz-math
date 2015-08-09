@@ -33,7 +33,7 @@ impl<T> Vec3<T>{
     ///
     /// ```
     /// use fiz_math::Vec3;
-    /// use fiz_math::dist::MM;
+    /// use fiz_math::unit::MM;
     ///
     /// let x = Vec3::new(MM(1.0), MM(5.0), MM(2.0));
     /// let y = Vec3::new(MM(1.0), MM(5.1), MM(1.9));

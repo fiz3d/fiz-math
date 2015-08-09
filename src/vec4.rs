@@ -32,7 +32,7 @@ impl<T> Vec4<T>{
     ///
     /// ```
     /// use fiz_math::Vec4;
-    /// use fiz_math::dist::MM;
+    /// use fiz_math::unit::MM;
     ///
     /// let x = Vec4::new(MM(1.0), MM(5.0), MM(2.0), MM(1.2));
     /// let y = Vec4::new(MM(1.0), MM(5.1), MM(1.9), MM(1.1));

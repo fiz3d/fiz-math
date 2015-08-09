@@ -1,4 +1,4 @@
-# [![Fiz3D](http://fiz3d.org/static/media/logo_nopad_101x48.png)](https://fiz3d.org) [Math](https://fiz3d.org/crate/math) [![Build Status](https://travis-ci.org/fiz3d/math.svg?branch=master)](https://travis-ci.org/fiz3d/math)
+# [![Fiz3D](http://fiz3d.org/static/media/readme_small.png)](https://fiz3d.org) [Math](https://fiz3d.org/crate/math) [![Build Status](https://travis-ci.org/fiz3d/math.svg?branch=master)](https://travis-ci.org/fiz3d/math)
 
 The [Fiz math crate](https://fiz3d.org/crate/math) provides a strong set of modules for linear algebra in two and three dimensions.
 

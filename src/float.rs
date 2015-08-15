@@ -38,32 +38,6 @@ pub trait Float: num::Float{
     /// ```
     fn equal(self, y: Self) -> bool;
 
-    /// radians converts the value `self` (presumed to be in degrees) to radians.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use fiz_math::Float;
-    /// use std::f64::consts::PI;
-    ///
-    /// assert_eq!(180.0.radians(), PI);
-    /// assert_eq!(360.0.radians(), PI * 2.0);
-    /// ```
-    fn radians(self) -> Self;
-
-    /// degrees converts the value `self` (presumed to be in radians) to degrees.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use fiz_math::Float;
-    /// use std::f64::consts::PI;
-    ///
-    /// assert_eq!(PI.degrees(), 180.0);
-    /// assert_eq!((PI*2.0).degrees(), 360.0);
-    /// ```
-    fn degrees(self) -> Self;
-
     /// lerp performs a linear interpolation between `self` and `b`. The `t`
     /// parameter is a number in the range 0.0 - 1.0.
     ///
@@ -90,14 +64,6 @@ impl<T: num::Float> Float for T {
 
     fn equal(self, y: T) -> bool {
         self.almost_equal(y, T::from(EPSILON).unwrap())
-    }
-
-    fn radians(self) -> Self {
-        T::from(f64::consts::PI).unwrap() * self / T::from(180.0).unwrap()
-    }
-
-    fn degrees(self) -> Self {
-        self * T::from(180.0 / f64::consts::PI).unwrap()
     }
 
     fn lerp(self, b: Self, t: Self) -> Self {

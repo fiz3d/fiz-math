@@ -124,6 +124,22 @@ impl<T: Float> Vec4<T>{
     }
 }
 
+impl<T: Float> Vec4<T> {
+    /// round returns the nearest integer to a number. Round half-way cases away
+    /// from 0.0.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::Vec4;
+    ///
+    /// assert_eq!(Vec4::new(0.3, 1.3, 2.0, 2.7).round(), Vec4::new(0.0, 1.0, 2.0, 3.0))
+    /// ```
+    pub fn round(&self) -> Self {
+        Vec4::new(self.x.round(), self.y.round(), self.z.round(), self.w.round())
+    }
+}
+
 impl<T: Add<Output = T>> Add for Vec4<T>{
     type Output = Self;
 

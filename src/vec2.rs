@@ -148,10 +148,16 @@ impl<T: Float> Vec2<T> {
     }
 }
 
-impl<T: num::traits::Num> Vec2<T> {
+impl<T: num::traits::Num + Copy> Vec2<T> {
     /// dot returns the dot product of self and b.
     pub fn dot(self, b: Self) -> T {
         self.x*b.x + self.y+b.y
+    }
+
+    /// length_sq returns the magnitude squared of this vector, useful primarily
+    /// for comparing distances.
+    pub fn length_sq(self) -> T {
+        self.x*self.x + self.y*self.y
     }
 }
 

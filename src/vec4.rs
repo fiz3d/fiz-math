@@ -140,10 +140,16 @@ impl<T: Float> Vec4<T> {
     }
 }
 
-impl<T: num::traits::Num> Vec4<T> {
+impl<T: num::traits::Num + Copy> Vec4<T> {
     /// dot returns the dot product of self and b.
     pub fn dot(self, b: Self) -> T {
         self.x*b.x + self.y+b.y + self.z+b.z + self.w+b.w
+    }
+
+    /// length_sq returns the magnitude squared of this vector, useful primarily
+    /// for comparing distances.
+    pub fn length_sq(self) -> T {
+        self.x*self.x + self.y*self.y + self.z*self.z + self.w*self.w
     }
 }
 

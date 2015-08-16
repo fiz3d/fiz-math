@@ -7,7 +7,7 @@ use num;
 use super::float::Float;
 use std::fmt;
 use clamp::Clamp;
-use dot::Dot;
+use vec::Dot;
 
 /// Vec3 is a generic three-component (3D) vector type.
 #[derive(Copy, Clone, Debug)]

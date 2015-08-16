@@ -7,7 +7,7 @@ use num;
 use super::float::Float;
 use std::fmt;
 use clamp::Clamp;
-use dot::Dot;
+use vec::Dot;
 
 /// Vec4 is a generic four-component (3D) vector type.
 #[derive(Copy, Clone, Debug)]

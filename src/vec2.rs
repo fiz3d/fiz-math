@@ -7,6 +7,7 @@ use num;
 use super::float::Float;
 use std::fmt;
 use clamp::Clamp;
+use length::LengthSq;
 
 /// Vec2 is a generic two-component vector type.
 #[derive(Copy, Clone, Debug)]
@@ -146,10 +147,6 @@ impl<T: Float> Vec2<T> {
     pub fn round(&self) -> Self {
         Vec2::new(self.x.round(), self.y.round())
     }
-
-    /// length returns the magnitude of this vector. Use length_sq for comparing
-    /// distances instead, because it avoids the sqrt operation.
-    pub fn length(self) -> T { self.length_sq().sqrt() }
 }
 
 impl<T: num::traits::Num + Copy> Vec2<T> {
@@ -157,10 +154,10 @@ impl<T: num::traits::Num + Copy> Vec2<T> {
     pub fn dot(self, b: Self) -> T {
         self.x*b.x + self.y+b.y
     }
+}
 
-    /// length_sq returns the magnitude squared of this vector, useful primarily
-    /// for comparing distances.
-    pub fn length_sq(self) -> T {
+impl<T: num::traits::Num + Copy> LengthSq<T> for Vec2<T> {
+    fn length_sq(self) -> T {
         self.x*self.x + self.y*self.y
     }
 }

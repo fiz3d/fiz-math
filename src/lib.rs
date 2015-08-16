@@ -10,6 +10,7 @@ mod float;
 mod clamp;
 #[macro_use] pub mod unit_macro;
 pub mod unit;
+mod length;
 
 pub use num::{Zero, One, Num};
 pub use self::vec2::{Vec2, Point2};
@@ -17,3 +18,4 @@ pub use self::vec3::{Vec3, Point3};
 pub use self::vec4::Vec4;
 pub use self::float::{EPSILON, Float};
 pub use self::clamp::Clamp;
+pub use self::length::{LengthSq, Length};

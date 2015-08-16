@@ -144,14 +144,12 @@ impl<T: Float> Vec4<T> {
 impl<T: num::traits::Num + Copy> Vec4<T> {
     /// dot returns the dot product of self and b.
     pub fn dot(self, b: Self) -> T {
-        self.x*b.x + self.y+b.y + self.z+b.z + self.w+b.w
+        self.x*b.x + self.y*b.y + self.z*b.z + self.w*b.w
     }
 }
 
 impl<T: num::traits::Num + Copy> LengthSq<T> for Vec4<T> {
-    fn length_sq(self) -> T {
-        self.x*self.x + self.y*self.y + self.z*self.z + self.w*self.w
-    }
+    fn length_sq(self) -> T { self.dot(self) }
 }
 
 impl<T: Add<Output = T>> Add for Vec4<T>{

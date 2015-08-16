@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 
-use std::ops::{Add, Sub, Mul, Div};
+use std::ops::{Add, Sub, Neg, Mul, Div};
 use std::cmp::{PartialEq, PartialOrd, Ordering};
 pub use num::{Zero, One};
 use num;
@@ -151,6 +151,13 @@ impl<T: Float> Vec3<T> {
     }
 }
 
+impl<T: num::traits::Num> Vec3<T> {
+    /// dot returns the dot product of self and b.
+    pub fn dot(self, b: Self) -> T {
+        self.x*b.x + self.y+b.y + self.z+b.z
+    }
+}
+
 impl<T: Add<Output = T>> Add for Vec3<T>{
     type Output = Vec3<T>;
 
@@ -191,6 +198,23 @@ impl<T: Add<Output = T> + Copy> Vec3<T> {
             y: self.y + _rhs,
             z: self.z + _rhs,
         }
+    }
+}
+
+impl<T: Neg<Output = T>> Neg for Vec3<T>{
+    type Output = Self;
+
+    /// neg returns the negated (i.e. inversed) vector self.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::Vec3;
+    ///
+    /// assert_eq!(-Vec3::new(1, 2, 3), Vec3::new(-1, -2, -3));
+    /// ```
+    fn neg(self) -> Self {
+        Vec3{x: -self.x, y: -self.y, z: -self.z}
     }
 }
 

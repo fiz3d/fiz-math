@@ -146,6 +146,10 @@ impl<T: Float> Vec2<T> {
     pub fn round(&self) -> Self {
         Vec2::new(self.x.round(), self.y.round())
     }
+
+    /// length returns the magnitude of this vector. Use length_sq for comparing
+    /// distances instead, because it avoids the sqrt operation.
+    pub fn length(self) -> T { self.length_sq().sqrt() }
 }
 
 impl<T: num::traits::Num + Copy> Vec2<T> {

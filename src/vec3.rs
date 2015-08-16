@@ -7,7 +7,7 @@ use num;
 use super::float::Float;
 use std::fmt;
 use clamp::Clamp;
-use length::LengthSq;
+use dot::Dot;
 
 /// Vec3 is a generic three-component (3D) vector type.
 #[derive(Copy, Clone, Debug)]
@@ -152,15 +152,10 @@ impl<T: Float> Vec3<T> {
     }
 }
 
-impl<T: num::traits::Num + Copy> Vec3<T> {
-    /// dot returns the dot product of self and b.
-    pub fn dot(self, b: Self) -> T {
+impl<T: num::traits::Num + Copy> Dot<T> for Vec3<T> {
+    fn dot(self, b: Self) -> T {
         self.x*b.x + self.y*b.y + self.z*b.z
     }
-}
-
-impl<T: num::traits::Num + Copy> LengthSq<T> for Vec3<T> {
-    fn length_sq(self) -> T { self.dot(self) }
 }
 
 impl<T: Add<Output = T>> Add for Vec3<T>{

@@ -44,18 +44,6 @@ impl<T> Vec2<T>{
     }
 }
 
-/// Point2 is a generic two-component (2D) point type.
-///
-/// # Examples
-///
-/// ```
-/// use fiz_math::Point2;
-///
-/// let p = Point2::new(1.0, 2.0);
-/// assert_eq!(p + p, Point2::new(2.0, 4.0))
-/// ```
-pub type Point2<T> = Vec2<T>;
-
 impl<T: fmt::Display> fmt::Display for Vec2<T> {
     /// fmt formats the vector.
     ///

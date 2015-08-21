@@ -9,7 +9,7 @@ pub trait LengthSq<T: Num+Copy> {
 	/// ```
 	/// use fiz_math::{Vec4, LengthSq};
 	///
-	/// assert_eq!(Vec4::new(1, 2, 3, 4).length_sq(), 30);
+	/// assert_eq!(Vec4(1, 2, 3, 4).length_sq(), 30);
 	/// ```
 	fn length_sq(self) -> T;
 }
@@ -24,7 +24,7 @@ pub trait Length<T: Float> {
 	/// ```
 	/// use fiz_math::{Vec4, Length, Float};
 	///
-	/// let l = Vec4::new(1.0, 2.0, 3.0, 4.0).length();
+	/// let l = Vec4(1.0, 2.0, 3.0, 4.0).length();
 	/// assert!(l.equal(5.47722557));
 	/// ```
 	fn length(self) -> T;
@@ -43,7 +43,7 @@ pub trait Dot<T: Num> {
 	/// ```
 	/// use fiz_math::{Vec4, Dot};
 	///
-	/// let x = Vec4::new(1, 2, 3, 4);
+	/// let x = Vec4(1, 2, 3, 4);
 	/// assert_eq!(x.dot(x), 30);
 	/// ```
 	fn dot(self, b: Self) -> T;

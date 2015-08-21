@@ -10,39 +10,29 @@ use clamp::Clamp;
 use vec::Dot;
 
 /// Vec2 is a generic two-component vector type.
+///
+/// # Examples
+///
+/// ```
+/// let x = fiz_math::Vec2(4.0f32, 8.0f32);
+/// println!("{:?}", x);
+/// ```
+///
+/// ```
+/// let x = fiz_math::Vec2(1u8, 5u8);
+/// println!("{:?}", x);
+/// ```
+///
+/// ```
+/// use fiz_math::Vec2;
+/// use fiz_math::unit::MM;
+///
+/// let x = Vec2(MM(1.0), MM(5.0));
+/// let y = Vec2(MM(1.0), MM(5.1));
+/// assert!(x.almost_equal(y, 0.1));
+/// ```
 #[derive(Copy, Clone, Debug)]
-pub struct Vec2<T>{
-    x: T,
-    y: T,
-}
-
-impl<T> Vec2<T>{
-    /// new returns a new vector with the given parameters.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// let x = fiz_math::Vec2::new(4.0f32, 8.0f32);
-    /// println!("{:?}", x);
-    /// ```
-    ///
-    /// ```
-    /// let x = fiz_math::Vec2::new(1u8, 5u8);
-    /// println!("{:?}", x);
-    /// ```
-    ///
-    /// ```
-    /// use fiz_math::Vec2;
-    /// use fiz_math::unit::MM;
-    ///
-    /// let x = Vec2::new(MM(1.0), MM(5.0));
-    /// let y = Vec2::new(MM(1.0), MM(5.1));
-    /// assert!(x.almost_equal(y, 0.1));
-    /// ```
-    pub fn new(x: T, y: T) -> Self {
-        Vec2{x: x, y: y}
-    }
-}
+pub struct Vec2<T>(pub T, pub T);
 
 impl<T: fmt::Display> fmt::Display for Vec2<T> {
     /// fmt formats the vector.
@@ -50,11 +40,11 @@ impl<T: fmt::Display> fmt::Display for Vec2<T> {
     /// # Examples
     ///
     /// ```
-    /// let x = fiz_math::Vec2::new(1u8, 5u8);
+    /// let x = fiz_math::Vec2(1u8, 5u8);
     /// assert_eq!(format!("{}", x), "Vec2(1, 5)");
     /// ```
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "Vec2({}, {})", self.x, self.y)
+        write!(f, "Vec2({}, {})", self.0, self.1)
     }
 }
 
@@ -76,7 +66,7 @@ impl<T: One> One for Vec2<T>{
     /// let x = fiz_math::Vec2::<i64>::one();
     /// ```
     fn one() -> Self {
-        Vec2{x: T::one(), y: T::one()}
+        Vec2(T::one(), T::one())
     }
 }
 
@@ -89,14 +79,14 @@ impl<T: Float> Vec2<T>{
     /// ```
     /// use fiz_math::Vec2;
     ///
-    /// let a = Vec2::<f32>::new(1.0, 1.0);
-    /// let b = Vec2::<f32>::new(0.9, 0.9);
+    /// let a = Vec2::<f32>(1.0, 1.0);
+    /// let b = Vec2::<f32>(0.9, 0.9);
     /// assert!(a.almost_equal(b, 0.1000001));
     /// assert!(!a.almost_equal(b, 0.1));
     /// ```
     pub fn almost_equal<N: num::Float>(self, other: Self, abs_tol: N) -> bool {
-        self.x.almost_equal(other.x, abs_tol) &&
-        self.y.almost_equal(other.y, abs_tol)
+        self.0.almost_equal(other.0, abs_tol) &&
+        self.1.almost_equal(other.1, abs_tol)
     }
 
     /// is_nan tells if all of this vectors components are NaN.
@@ -111,13 +101,13 @@ impl<T: Float> Vec2<T>{
     ///
     /// # fn main() {
     /// let n:f32 = Float::nan();
-    /// assert!(Vec2::new(n, n).is_nan());
-    /// assert!(!Vec2::new(n, 0.0).is_nan());
+    /// assert!(Vec2(n, n).is_nan());
+    /// assert!(!Vec2(n, 0.0).is_nan());
     /// # }
     /// ```
     pub fn is_nan(self) -> bool {
-        self.x.is_nan() &&
-        self.y.is_nan()
+        self.0.is_nan() &&
+        self.1.is_nan()
     }
 }
 
@@ -130,16 +120,16 @@ impl<T: Float> Vec2<T> {
     /// ```
     /// use fiz_math::Vec2;
     ///
-    /// assert_eq!(Vec2::new(0.3, 1.3).round(), Vec2::new(0.0, 1.0))
+    /// assert_eq!(Vec2(0.3, 1.3).round(), Vec2(0.0, 1.0))
     /// ```
     pub fn round(&self) -> Self {
-        Vec2::new(self.x.round(), self.y.round())
+        Vec2(self.0.round(), self.1.round())
     }
 }
 
 impl<T: num::traits::Num + Copy> Dot<T> for Vec2<T> {
     fn dot(self, b: Self) -> T {
-        self.x*b.x + self.y*b.y
+        self.0*b.0 + self.1*b.1
     }
 }
 
@@ -153,15 +143,15 @@ impl<T: Add<Output = T>> Add for Vec2<T>{
     /// ```
     /// use fiz_math::Vec2;
     ///
-    /// let a = Vec2::new(1, 2);
-    /// let b = Vec2::new(4, 5);
-    /// assert_eq!(a + b, Vec2::new(5, 7));
+    /// let a = Vec2(1, 2);
+    /// let b = Vec2(4, 5);
+    /// assert_eq!(a + b, Vec2(5, 7));
     /// ```
     fn add(self, _rhs: Self) -> Self {
-        Vec2{
-            x: self.x + _rhs.x,
-            y: self.y + _rhs.y,
-        }
+        Vec2(
+            self.0 + _rhs.0,
+            self.1 + _rhs.1,
+        )
     }
 }
 
@@ -173,14 +163,14 @@ impl<T: Add<Output = T> + Copy> Vec2<T> {
     /// ```
     /// use fiz_math::Vec2;
     ///
-    /// let a = Vec2::new(1, 2);
-    /// assert_eq!(a.add_scalar(1), Vec2::new(2, 3));
+    /// let a = Vec2(1, 2);
+    /// assert_eq!(a.add_scalar(1), Vec2(2, 3));
     /// ```
     pub fn add_scalar(self, _rhs: T) -> Self {
-        Vec2{
-            x: self.x + _rhs,
-            y: self.y + _rhs,
-        }
+        Vec2(
+            self.0 + _rhs,
+            self.1 + _rhs,
+        )
     }
 }
 
@@ -194,10 +184,10 @@ impl<T: Neg<Output = T>> Neg for Vec2<T>{
     /// ```
     /// use fiz_math::Vec2;
     ///
-    /// assert_eq!(-Vec2::new(1, 2), Vec2::new(-1, -2));
+    /// assert_eq!(-Vec2(1, 2), Vec2(-1, -2));
     /// ```
     fn neg(self) -> Self {
-        Vec2{x: -self.x, y: -self.y}
+        Vec2(-self.0, -self.1)
     }
 }
 
@@ -211,15 +201,15 @@ impl<T: Sub<Output = T>> Sub for Vec2<T>{
     /// ```
     /// use fiz_math::Vec2;
     ///
-    /// let a = Vec2::new(1, 2);
-    /// let b = Vec2::new(4, 5);
-    /// assert_eq!(a - b, Vec2::new(-3, -3));
+    /// let a = Vec2(1, 2);
+    /// let b = Vec2(4, 5);
+    /// assert_eq!(a - b, Vec2(-3, -3));
     /// ```
     fn sub(self, _rhs: Self) -> Self {
-        Vec2{
-            x: self.x - _rhs.x,
-            y: self.y - _rhs.y,
-        }
+        Vec2(
+            self.0 - _rhs.0,
+            self.1 - _rhs.1,
+        )
     }
 }
 
@@ -231,14 +221,14 @@ impl<T: Sub<Output = T> + Copy> Vec2<T> {
     /// ```
     /// use fiz_math::Vec2;
     ///
-    /// let a = Vec2::new(2, 3);
-    /// assert_eq!(a.sub_scalar(1), Vec2::new(1, 2));
+    /// let a = Vec2(2, 3);
+    /// assert_eq!(a.sub_scalar(1), Vec2(1, 2));
     /// ```
     pub fn sub_scalar(self, _rhs: T) -> Self {
-        Vec2{
-            x: self.x - _rhs,
-            y: self.y - _rhs,
-        }
+        Vec2(
+            self.0 - _rhs,
+            self.1 - _rhs,
+        )
     }
 }
 
@@ -252,15 +242,15 @@ impl<T: Mul<Output = T>> Mul for Vec2<T>{
     /// ```
     /// use fiz_math::Vec2;
     ///
-    /// let a = Vec2::new(1, 2);
-    /// let b = Vec2::new(4, 5);
-    /// assert_eq!(a * b, Vec2::new(4, 10));
+    /// let a = Vec2(1, 2);
+    /// let b = Vec2(4, 5);
+    /// assert_eq!(a * b, Vec2(4, 10));
     /// ```
     fn mul(self, _rhs: Self) -> Self {
-        Vec2{
-            x: self.x * _rhs.x,
-            y: self.y * _rhs.y,
-        }
+        Vec2(
+            self.0 * _rhs.0,
+            self.1 * _rhs.1,
+        )
     }
 }
 
@@ -272,14 +262,14 @@ impl<T: Mul<Output = T> + Copy> Vec2<T> {
     /// ```
     /// use fiz_math::Vec2;
     ///
-    /// let a = Vec2::new(2, 3);
-    /// assert_eq!(a.mul_scalar(2), Vec2::new(4, 6));
+    /// let a = Vec2(2, 3);
+    /// assert_eq!(a.mul_scalar(2), Vec2(4, 6));
     /// ```
     pub fn mul_scalar(self, _rhs: T) -> Self {
-        Vec2{
-            x: self.x * _rhs,
-            y: self.y * _rhs,
-        }
+        Vec2(
+            self.0 * _rhs,
+            self.1 * _rhs,
+        )
     }
 }
 
@@ -293,15 +283,15 @@ impl<T: Div<Output = T>> Div for Vec2<T>{
     /// ```
     /// use fiz_math::Vec2;
     ///
-    /// let a = Vec2::new(4, 5);
-    /// let b = Vec2::new(1, 2);
-    /// assert_eq!(a / b, Vec2::new(4, 2));
+    /// let a = Vec2(4, 5);
+    /// let b = Vec2(1, 2);
+    /// assert_eq!(a / b, Vec2(4, 2));
     /// ```
     fn div(self, _rhs: Self) -> Self {
-        Vec2{
-            x: self.x / _rhs.x,
-            y: self.y / _rhs.y,
-        }
+        Vec2(
+            self.0 / _rhs.0,
+            self.1 / _rhs.1,
+        )
     }
 }
 
@@ -313,14 +303,14 @@ impl<T: Div<Output = T> + Copy> Vec2<T> {
     /// ```
     /// use fiz_math::Vec2;
     ///
-    /// let a = Vec2::new(2, 4);
-    /// assert_eq!(a.div_scalar(2), Vec2::new(1, 2));
+    /// let a = Vec2(2, 4);
+    /// assert_eq!(a.div_scalar(2), Vec2(1, 2));
     /// ```
     pub fn div_scalar(self, _rhs: T) -> Self {
-        Vec2{
-            x: self.x / _rhs,
-            y: self.y / _rhs,
-        }
+        Vec2(
+            self.0 / _rhs,
+            self.1 / _rhs,
+        )
     }
 }
 
@@ -335,14 +325,14 @@ impl<T: Clamp<Elem = T> + Copy> Clamp for Vec2<T>{
     /// ```
     /// use fiz_math::{Vec2, Clamp};
     ///
-    /// let a = Vec2::new(-2, 4);
-    /// assert_eq!(a.clamp(-1, 2), Vec2::new(-1, 2));
+    /// let a = Vec2(-2, 4);
+    /// assert_eq!(a.clamp(-1, 2), Vec2(-1, 2));
     /// ```
     fn clamp(self, min: T, max: T) -> Self {
-        Vec2{
-            x: self.x.clamp(min, max),
-            y: self.y.clamp(min, max),
-        }
+        Vec2(
+            self.0.clamp(min, max),
+            self.1.clamp(min, max),
+        )
     }
 }
 
@@ -361,12 +351,12 @@ impl<T:PartialOrd> Vec2<T> {
     /// ```
     /// use fiz_math::Vec2;
     ///
-    /// let a = Vec2::new(0, 1);
-    /// assert!(a.any_less(Vec2::new(0, 2)));
+    /// let a = Vec2(0, 1);
+    /// assert!(a.any_less(Vec2(0, 2)));
     /// ```
     pub fn any_less<O:AsRef<Self>>(&self, other: O) -> bool {
         let o = other.as_ref();
-        self.x < o.x || self.y < o.y
+        self.0 < o.0 || self.1 < o.1
     }
 
     /// any_greater tells if any component of the other vector is greater than
@@ -377,12 +367,12 @@ impl<T:PartialOrd> Vec2<T> {
     /// ```
     /// use fiz_math::Vec2;
     ///
-    /// let a = Vec2::new(0, 2);
-    /// assert!(a.any_greater(Vec2::new(0, 1)));
+    /// let a = Vec2(0, 2);
+    /// assert!(a.any_greater(Vec2(0, 1)));
     /// ```
     pub fn any_greater<O:AsRef<Self>>(&self, other: O) -> bool {
         let o = other.as_ref();
-        self.x > o.x || self.y > o.y
+        self.0 > o.0 || self.1 > o.1
     }
 }
 
@@ -394,21 +384,21 @@ impl<T: PartialEq> PartialEq for Vec2<T> {
     /// ```
     /// use fiz_math::Vec2;
     ///
-    /// let a = Vec2::new(4.0, 9.0);
-    /// let b = Vec2::new(4.0, 9.00000000000000000000001);
+    /// let a = Vec2(4.0, 9.0);
+    /// let b = Vec2(4.0, 9.00000000000000000000001);
     /// assert_eq!(a, b);
     /// ```
     ///
     /// ```
     /// use fiz_math::Vec2;
     ///
-    /// let a = Vec2::new(4, 5);
-    /// let b = Vec2::new(4, 5);
+    /// let a = Vec2(4, 5);
+    /// let b = Vec2(4, 5);
     /// assert_eq!(a, b);
     /// ```
     fn eq(&self, _rhs: &Self) -> bool {
-        self.x == _rhs.x &&
-        self.y == _rhs.y
+        self.0 == _rhs.0 &&
+        self.1 == _rhs.1
     }
 }
 
@@ -420,13 +410,13 @@ impl<T: PartialOrd> PartialOrd for Vec2<T>{
     /// ```
     /// use fiz_math::Vec2;
     ///
-    /// let a = Vec2::new(1.0, 2.0);
-    /// assert!(a < Vec2::new(1.1, 2.1));
+    /// let a = Vec2(1.0, 2.0);
+    /// assert!(a < Vec2(1.1, 2.1));
     /// ```
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-        if self.x < other.x && self.y < other.y {
+        if self.0 < other.0 && self.1 < other.1 {
             Some(Ordering::Less)
-        } else if self.x > other.x && self.y > other.y {
+        } else if self.0 > other.0 && self.1 > other.1 {
             Some(Ordering::Greater)
         } else if self == other {
             Some(Ordering::Equal)
@@ -450,7 +440,7 @@ impl<T: Zero> Zero for Vec2<T>{
     /// let w = Vec2::<f64>::zero();
     /// ```
     fn zero() -> Self {
-        Vec2{x: Zero::zero(), y: Zero::zero()}
+        Vec2(Zero::zero(), Zero::zero())
     }
 
     /// is_zero tests if the vector is equal to zero.
@@ -460,13 +450,13 @@ impl<T: Zero> Zero for Vec2<T>{
     /// ```
     /// use fiz_math::{Zero, Vec2};
     ///
-    /// assert!(!Vec2::new(1i32, 0).is_zero());
-    /// assert!(Vec2::new(0u8, 0).is_zero());
-    /// assert!(!Vec2::new(1.0f32, 0.0).is_zero());
-    /// assert!(Vec2::new(0.0f64, 0.0).is_zero());
+    /// assert!(!Vec2(1i32, 0).is_zero());
+    /// assert!(Vec2(0u8, 0).is_zero());
+    /// assert!(!Vec2(1.0f32, 0.0).is_zero());
+    /// assert!(Vec2(0.0f64, 0.0).is_zero());
     /// ```
     fn is_zero(&self) -> bool {
-        self.x.is_zero() &&
-        self.y.is_zero()
+        self.0.is_zero() &&
+        self.1.is_zero()
     }
 }

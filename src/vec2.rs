@@ -138,9 +138,7 @@ impl<T: Float> Vec2<T>{
         self.0.is_nan() &&
         self.1.is_nan()
     }
-}
 
-impl<T: Float> Vec2<T> {
     /// round returns the nearest integer to a number. Round half-way cases away
     /// from 0.0.
     ///

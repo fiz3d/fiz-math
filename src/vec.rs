@@ -1,4 +1,8 @@
 use num::traits::{Num, Float};
+use std::iter::IntoIterator;
+
+pub trait Vec<T>: IntoIterator<Item=T> {
+}
 
 pub trait LengthSq<T: Num+Copy> {
 	/// length_sq returns the magnitude squared of this vector, useful primarily
@@ -51,4 +55,14 @@ pub trait Dot<T: Num> {
 
 impl<N, D> LengthSq<N> for D where N: Num+Copy, D: Dot<N>+Copy {
 	fn length_sq(self) -> N { self.dot(self) }
+}
+
+impl<T, V> Dot<T> for V where T: Num+Copy, V: Vec<T> {
+	fn dot(self, b: Self) -> T {
+		let mut result = T::zero();
+		for (e,o) in self.into_iter().zip(b) {
+			result = result + (e * o);
+		}
+		result
+	}
 }

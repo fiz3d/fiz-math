@@ -7,7 +7,8 @@ use num;
 use super::float::Float;
 use std::fmt;
 use clamp::Clamp;
-use vec::Dot;
+use vec::Vec;
+use std::iter::IntoIterator;
 
 /// Vec3 is a generic three-component (3D) vector type.
 ///
@@ -33,6 +34,35 @@ use vec::Dot;
 /// ```
 #[derive(Copy, Clone, Debug)]
 pub struct Vec3<T>(pub T, pub T, pub T);
+
+impl<T: Copy> IntoIterator for Vec3<T> {
+    type Item = T;
+    type IntoIter = Vec3Iterator<T>;
+    fn into_iter(self) -> Self::IntoIter {
+        Vec3Iterator{v: self, index: 0}
+    }
+}
+
+pub struct Vec3Iterator<T> {
+    v: Vec3<T>,
+    index: usize,
+}
+
+impl<T: Copy> Iterator for Vec3Iterator<T> {
+    type Item = T;
+    fn next(&mut self) -> Option<T> {
+        let result = match self.index {
+            0 => Some(self.v.0),
+            1 => Some(self.v.1),
+            2 => Some(self.v.2),
+            _ => return None,
+        };
+        self.index += 1;
+        result
+    }
+}
+
+impl<T: Copy> Vec<T> for Vec3<T> {}
 
 impl<T: fmt::Display> fmt::Display for Vec3<T> {
     /// fmt formats the vector.
@@ -126,12 +156,6 @@ impl<T: Float> Vec3<T> {
     /// ```
     pub fn round(&self) -> Self {
         Vec3(self.0.round(), self.1.round(), self.2.round())
-    }
-}
-
-impl<T: num::traits::Num + Copy> Dot<T> for Vec3<T> {
-    fn dot(self, b: Self) -> T {
-        self.0*b.0 + self.1*b.1 + self.2*b.2
     }
 }
 

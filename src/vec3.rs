@@ -2,12 +2,11 @@
 
 use std::ops::{Add, Sub, Neg, Mul, Div};
 use std::cmp::{PartialEq, PartialOrd, Ordering};
-pub use num::{Zero, One};
+pub use num::{Zero, One, Num};
 use num;
 use super::float::Float;
 use std::fmt;
 use clamp::Clamp;
-use vec::Vec;
 use std::iter::IntoIterator;
 
 /// Vec3 is a generic three-component (3D) vector type.
@@ -61,8 +60,6 @@ impl<T: Copy> Iterator for Vec3Iterator<T> {
         result
     }
 }
-
-impl<T: Copy> Vec<T> for Vec3<T> {}
 
 impl<T: fmt::Display> fmt::Display for Vec3<T> {
     /// fmt formats the vector.
@@ -494,4 +491,49 @@ impl<T: Zero> Zero for Vec3<T>{
         self.1.is_zero() &&
         self.2.is_zero()
     }
+}
+
+impl<T: Num+Copy> Vec3<T> {
+  /// dot returns the dot product of self and b. For length calculations use
+  /// length or length_sq functions instead (for clarity).
+  ///
+  /// # Examples
+  ///
+  /// ```
+  /// use fiz_math::Vec3;
+  ///
+  /// let x = Vec3(1, 2, 3);
+  /// assert_eq!(x.dot(x), 14);
+  /// ```
+  pub fn dot(self, b: Self) -> T {
+    self.0*b.0 + self.1*b.1 + self.2*b.2
+  }
+
+  /// length_sq returns the magnitude squared of this vector, useful primarily
+  /// for comparing distances.
+  ///
+  /// # Examples
+  ///
+  /// ```
+  /// use fiz_math::Vec3;
+  ///
+  /// assert_eq!(Vec3(1, 2, 3).length_sq(), 14);
+  /// ```
+  pub fn length_sq(self) -> T { self.dot(self) }
+}
+
+impl<T: Float> Vec3<T> {
+  /// length returns the magnitude of this vector. Use length_sq instead when
+  /// comparing distances, because it avoids the extra sqrt operation needed
+  /// by this method.
+  ///
+  /// # Examples
+  ///
+  /// ```
+  /// use fiz_math::{Vec3, Float};
+  ///
+  /// let l = Vec3(1.0, 2.0, 3.0).length();
+  /// assert!(l.equal(3.74165738));
+  /// ```
+  pub fn length(self) -> T { self.length_sq().sqrt() }
 }

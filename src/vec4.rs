@@ -2,12 +2,11 @@
 
 use std::ops::{Add, Sub, Neg, Mul, Div};
 use std::cmp::{PartialEq, PartialOrd, Ordering};
-pub use num::{Zero, One};
+pub use num::{Zero, One, Num};
 use num;
 use super::float::Float;
 use std::fmt;
 use clamp::Clamp;
-use vec::Vec;
 use std::iter::IntoIterator;
 
 /// Vec4 is a generic four-component (3D) vector type.
@@ -60,8 +59,6 @@ impl<T: Copy> Iterator for Vec4Iterator<T> {
         result
     }
 }
-
-impl<T: Copy> Vec<T> for Vec4<T> {}
 
 impl<T: fmt::Display> fmt::Display for Vec4<T> {
     /// fmt formats the vector.
@@ -506,4 +503,49 @@ impl<T: Zero> Zero for Vec4<T>{
         self.2.is_zero() &&
         self.3.is_zero()
     }
+}
+
+impl<T: Num+Copy> Vec4<T> {
+  /// dot returns the dot product of self and b. For length calculations use
+  /// length or length_sq functions instead (for clarity).
+  ///
+  /// # Examples
+  ///
+  /// ```
+  /// use fiz_math::Vec4;
+  ///
+  /// let x = Vec4(1, 2, 3, 4);
+  /// assert_eq!(x.dot(x), 30);
+  /// ```
+  pub fn dot(self, b: Self) -> T {
+    self.0*b.0 + self.1*b.1 + self.2*b.2 + self.3*b.3
+  }
+
+  /// length_sq returns the magnitude squared of this vector, useful primarily
+  /// for comparing distances.
+  ///
+  /// # Examples
+  ///
+  /// ```
+  /// use fiz_math::Vec4;
+  ///
+  /// assert_eq!(Vec4(1, 2, 3, 4).length_sq(), 30);
+  /// ```
+  pub fn length_sq(self) -> T { self.dot(self) }
+}
+
+impl<T: Float> Vec4<T> {
+  /// length returns the magnitude of this vector. Use length_sq instead when
+  /// comparing distances, because it avoids the extra sqrt operation needed
+  /// by this method.
+  ///
+  /// # Examples
+  ///
+  /// ```
+  /// use fiz_math::{Vec4, Float};
+  ///
+  /// let l = Vec4(1.0, 2.0, 3.0, 4.0).length();
+  /// assert!(l.equal(5.47722557));
+  /// ```
+  pub fn length(self) -> T { self.length_sq().sqrt() }
 }

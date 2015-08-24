@@ -522,4 +522,25 @@ impl<T: Float> Vec2<T> {
   /// assert!(l.equal(2.23606797));
   /// ```
   pub fn length(self) -> T { self.length_sq().sqrt() }
+
+  /// normalize returns the normalized (i.e. length/magnitude == 1) vector
+  /// representing self. If the vector's length is zero and division by zero
+  /// would occur, then None is returned.
+  ///
+  /// # Examples
+  ///
+  /// ```
+  /// use fiz_math::Vec2;
+  ///
+  /// let n = Vec2(1.0, 10.0).normalize().unwrap();
+  /// assert!(n.almost_equal(Vec2(0.1, 1.0), 1e-2));
+  /// ```
+  pub fn normalize(self) -> Option<Self> {
+    let length = self.length();
+    if length == T::zero() {
+      None
+    } else {
+      Some(self.div_scalar(length))
+    }
+  }
 }

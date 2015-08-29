@@ -543,4 +543,20 @@ impl<T: Float> Vec2<T> {
       Some(self.div_scalar(length))
     }
   }
+
+  /// project returns a vector representing the projection of the `self` vector
+  /// onto the `other` vector.
+  ///
+  /// # Examples
+  ///
+  /// ```
+  /// use fiz_math::Vec2;
+  ///
+  /// let a = Vec2(1.0, 2.0);
+  /// let b = Vec2(1.0, 3.0);
+  /// assert!(a.project(b).almost_equal(Vec2(0.7, 2.09), 0.01));
+  /// ```
+  pub fn project(self, other: Self) -> Self {
+    other.mul_scalar(self.dot(other) / other.length_sq())
+  }
 }

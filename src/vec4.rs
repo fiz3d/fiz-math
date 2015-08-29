@@ -532,6 +532,22 @@ impl<T: Num+Copy> Vec4<T> {
   /// assert_eq!(Vec4(1, 2, 3, 4).length_sq(), 30);
   /// ```
   pub fn length_sq(self) -> T { self.dot(self) }
+
+  /// project returns a vector representing the projection of the `self` vector
+  /// onto the `other` vector.
+  ///
+  /// # Examples
+  ///
+  /// ```
+  /// use fiz_math::Vec4;
+  ///
+  /// let a = Vec4(1.0, 2.0, 4.0, 1.0);
+  /// let b = Vec4(1.0, 2.0, 3.0, 1.0);
+  /// assert!(a.project(b).almost_equal(Vec4(1.2, 2.4, 3.59, 1.2), 0.01));
+  /// ```
+  pub fn project(self, other: Self) -> Self {
+    other.mul_scalar(self.dot(other) / other.length_sq())
+  }
 }
 
 impl<T: Float> Vec4<T> {

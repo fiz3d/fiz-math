@@ -468,6 +468,46 @@ impl<T: PartialOrd> PartialOrd for Vec4<T>{
     }
 }
 
+impl<T: PartialOrd> Vec4<T> {
+  /// min returns a vector representing the smallest components of the `self`
+  /// and `other` vectors.
+  ///
+  /// # Examples
+  ///
+  /// ```
+  /// use fiz_math::Vec4;
+  ///
+  /// assert_eq!(Vec4(0, 1, 2, 3).min(Vec4(-1, 0, 3, 4)), Vec4(-1, 0, 2, 3));
+  /// ```
+  pub fn min(self, other: Self) -> Self {
+    Vec4(
+      if self.0 < other.0 { self.0 } else {other.0},
+      if self.1 < other.1 { self.1 } else {other.1},
+      if self.2 < other.2 { self.2 } else {other.2},
+      if self.3 < other.3 { self.3 } else {other.3},
+    )
+  }
+
+  /// max returns a vector representing the largest components of the `self`
+  /// and `other` vectors.
+  ///
+  /// # Examples
+  ///
+  /// ```
+  /// use fiz_math::Vec4;
+  ///
+  /// assert_eq!(Vec4(0, 1, 2, 3).max(Vec4(-1, 0, 3, 4)), Vec4(0, 1, 3, 4));
+  /// ```
+  pub fn max(self, other: Self) -> Self {
+    Vec4(
+      if self.0 > other.0 { self.0 } else {other.0},
+      if self.1 > other.1 { self.1 } else {other.1},
+      if self.2 > other.2 { self.2 } else {other.2},
+      if self.3 > other.3 { self.3 } else {other.3},
+    )
+  }
+}
+
 impl<T: Zero> Zero for Vec4<T>{
     /// zero returns the zero-value for the vector.
     ///

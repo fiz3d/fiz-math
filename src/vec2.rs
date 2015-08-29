@@ -444,6 +444,42 @@ impl<T: PartialOrd> PartialOrd for Vec2<T>{
     }
 }
 
+impl<T: PartialOrd> Vec2<T> {
+  /// min returns a vector representing the smallest components of the `self`
+  /// and `other` vectors.
+  ///
+  /// # Examples
+  ///
+  /// ```
+  /// use fiz_math::Vec2;
+  ///
+  /// assert_eq!(Vec2(0, 1).min(Vec2(-1, 0)), Vec2(-1, 0));
+  /// ```
+  pub fn min(self, other: Self) -> Self {
+    Vec2(
+      if self.0 < other.0 { self.0 } else {other.0},
+      if self.1 < other.1 { self.1 } else {other.1},
+    )
+  }
+
+  /// max returns a vector representing the largest components of the `self`
+  /// and `other` vectors.
+  ///
+  /// # Examples
+  ///
+  /// ```
+  /// use fiz_math::Vec2;
+  ///
+  /// assert_eq!(Vec2(0, 1).max(Vec2(-1, 0)), Vec2(0, 1));
+  /// ```
+  pub fn max(self, other: Self) -> Self {
+    Vec2(
+      if self.0 > other.0 { self.0 } else {other.0},
+      if self.1 > other.1 { self.1 } else {other.1},
+    )
+  }
+}
+
 impl<T: Zero> Zero for Vec2<T>{
     /// zero returns the zero-value for the vector.
     ///

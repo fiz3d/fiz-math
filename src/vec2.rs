@@ -595,4 +595,21 @@ impl<T: Float> Vec2<T> {
   pub fn project(self, other: Self) -> Self {
     other.mul_scalar(self.dot(other) / other.length_sq())
   }
+
+  /// lerp returns a vector representing the linear interpolation between the
+  /// `self` and `other` vectors. The parameter `t` is the amount to interpolate
+  /// between the vectors (e.g. `0.0 - 1.0`).
+  ///
+  /// # Examples
+  ///
+  /// ```
+  /// use fiz_math::Vec2;
+  ///
+  /// let a = Vec2(1.25, 1.25);
+  /// let b = Vec2(2.0, 2.0);
+  /// assert_eq!(a.lerp(b, 0.25), Vec2(0.625, 0.625));
+  /// ```
+  pub fn lerp(self, other: Self, t: T) -> Self {
+    self * other.mul_scalar(t)
+  }
 }

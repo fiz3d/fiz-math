@@ -625,4 +625,21 @@ impl<T: Float> Vec4<T> {
       Some(self.div_scalar(length))
     }
   }
+
+  /// lerp returns a vector representing the linear interpolation between the
+  /// `self` and `other` vectors. The parameter `t` is the amount to interpolate
+  /// between the vectors (e.g. `0.0 - 1.0`).
+  ///
+  /// # Examples
+  ///
+  /// ```
+  /// use fiz_math::Vec4;
+  ///
+  /// let a = Vec4(1.25, 1.25, 1.25, 1.25);
+  /// let b = Vec4(2.0, 2.0, 2.0, 2.0);
+  /// assert_eq!(a.lerp(b, 0.25), Vec4(0.625, 0.625, 0.625, 0.625));
+  /// ```
+  pub fn lerp(self, other: Self, t: T) -> Self {
+    self * other.mul_scalar(t)
+  }
 }

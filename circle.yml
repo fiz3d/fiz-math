@@ -2,6 +2,9 @@ dependencies:
   override:
     - bash <(curl -sf https://raw.githubusercontent.com/brson/multirust/master/blastoff.sh) --yes
 
+  cache_directories:
+    - "~/.multirust"
+
 test:
   override:
     - multirust update stable && cargo test

@@ -1,6 +1,6 @@
 dependencies:
   override:
-    - curl -sf https://raw.githubusercontent.com/brson/multirust/master/blastoff.sh | sh
+    - bash <(curl -sf https://raw.githubusercontent.com/brson/multirust/master/blastoff.sh) --yes
 
 test:
   override:

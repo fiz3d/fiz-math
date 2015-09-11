@@ -1,0 +1,9 @@
+dependencies:
+  override:
+    - curl -sf https://raw.githubusercontent.com/brson/multirust/master/blastoff.sh | sh
+
+test:
+  override:
+    - multirust update stable && cargo test
+    - multirust update nightly && cargo test
+    - multirust update beta && cargo test

@@ -11,5 +11,8 @@ dependencies:
 test:
   override:
     - multirust default stable && cargo test
-    - multirust default nightly && cargo test
+
+    # Disabling colored output (which CircleCI doesn't display properly) requires nightly cargo.
+    - multirust default nightly && cargo test --color=never -- --color never
+
     - multirust default beta && cargo test

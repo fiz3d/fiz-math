@@ -613,3 +613,7 @@ impl<T: Float> Vec2<T> {
     self * other.mul_scalar(t)
   }
 }
+
+swizzle!(x, Vec2);
+swizzle!(y, Vec2);
+swizzle!(2, Vec2);

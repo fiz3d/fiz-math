@@ -5,6 +5,7 @@ use std::cmp::{PartialEq, PartialOrd, Ordering};
 pub use num::{Zero, One, Num};
 use num;
 use super::float::Float;
+use super::Vec2;
 use std::fmt;
 use clamp::Clamp;
 use std::iter::IntoIterator;
@@ -629,3 +630,9 @@ impl<T: Float> Vec3<T> {
     self * other.mul_scalar(t)
   }
 }
+
+swizzle!(x, Vec3);
+swizzle!(y, Vec3);
+swizzle!(z, Vec3);
+swizzle!(2, Vec3);
+swizzle!(3, Vec3);

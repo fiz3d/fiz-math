@@ -7,7 +7,9 @@ use super::rad::{Rad, ToRad};
 ///
 /// For example the radians type (Rad) implements the ToDeg trait and thus
 /// radians can be given as a parameter to any input that seeks degrees.
-pub trait ToDeg<T>{
+pub trait ToDeg{
+    type Output;
+
     /// to_deg returns these units in degrees, performing conversion if needed.
     ///
     /// # Examples
@@ -17,13 +19,13 @@ pub trait ToDeg<T>{
     /// use fiz_math::Num;
     /// use std::fmt::Debug;
     ///
-    /// fn walk<T: ToDeg<U>, U: Num+Debug>(x: T) {
+    /// fn walk<T: ToDeg<Output=U>, U: Num+Debug>(x: T) {
     ///     println!("{:?}", x.to_deg().0)
     /// }
     /// walk(Rad(2.0));
     /// walk(Rad::<i16>(2));
     /// ```
-    fn to_deg(self) -> Deg<T>;
+    fn to_deg(self) -> Deg<Self::Output>;
 }
 
 /// Deg represents degrees (a measurement of plane angle, representing 1/360th a
@@ -39,7 +41,9 @@ pub trait ToDeg<T>{
 /// ```
 unit!(Deg);
 
-impl<T: Num+NumCast> ToDeg<T> for Deg<T> {
+impl<T: Num+NumCast> ToDeg for Deg<T> {
+    type Output = T;
+
     /// to_deg simply returns self.
     ///
     /// # Examples
@@ -56,7 +60,9 @@ impl<T: Num+NumCast> ToDeg<T> for Deg<T> {
 
 static FRAC_PI_180:f64 = f64::consts::PI / 180.0;
 
-impl<T: Num+NumCast> ToRad<T> for Deg<T> {
+impl<T: Num+NumCast> ToRad for Deg<T> {
+    type Output = T;
+
     /// to_rad converts these degrees into radians.
     ///
     /// # Examples

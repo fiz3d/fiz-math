@@ -8,9 +8,11 @@ use super::km::{KM, ToKM};
 ///
 /// For example the millimeters type (MM) implements the ToCM trait and thus
 /// millimeters can be given as a parameter to any input that seeks centimeters.
-pub trait ToCM<T>{
+pub trait ToCM{
+    type Output;
+
     /// to_cm returns these units in centimeters, performing conversion if needed.
-    fn to_cm(self) -> CM<T>;
+    fn to_cm(self) -> CM<Self::Output>;
 }
 
 /// CM represents centimeters (1/100th a meter).
@@ -25,7 +27,9 @@ pub trait ToCM<T>{
 /// ```
 unit!(CM);
 
-impl<T: Num+NumCast> ToMM<T> for CM<T> {
+impl<T: Num+NumCast> ToMM for CM<T> {
+    type Output = T;
+
     /// to_mm returns these centimeters converted to millimeters.
     ///
     /// # Examples
@@ -40,7 +44,9 @@ impl<T: Num+NumCast> ToMM<T> for CM<T> {
     }
 }
 
-impl<T: Num+NumCast> ToCM<T> for CM<T> {
+impl<T: Num+NumCast> ToCM for CM<T> {
+    type Output = T;
+
     /// to_cm simply returns self.
     ///
     /// # Examples
@@ -55,7 +61,9 @@ impl<T: Num+NumCast> ToCM<T> for CM<T> {
     }
 }
 
-impl<T: Num+NumCast> ToM<T> for CM<T> {
+impl<T: Num+NumCast> ToM for CM<T> {
+    type Output = T;
+
     /// to_m returns these centimeters converted to meters.
     ///
     /// # Examples
@@ -70,7 +78,9 @@ impl<T: Num+NumCast> ToM<T> for CM<T> {
     }
 }
 
-impl<T: Num+NumCast> ToKM<T> for CM<T> {
+impl<T: Num+NumCast> ToKM for CM<T> {
+    type Output = T;
+
     /// to_km returns these centimeters converted to kilometers.
     ///
     /// # Examples

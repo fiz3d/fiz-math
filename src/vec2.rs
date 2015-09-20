@@ -5,6 +5,8 @@ use std::cmp::{PartialEq, PartialOrd, Ordering};
 pub use num::{Zero, One, Num};
 use num;
 use super::float::Float;
+use super::Vec3;
+use super::unit::{ToRad, Rad};
 use std::fmt;
 use clamp::Clamp;
 use std::iter::IntoIterator;
@@ -612,6 +614,33 @@ impl<T: Float> Vec2<T> {
   pub fn lerp(self, other: Self, t: T) -> Self {
     self * other.mul_scalar(t)
   }
+}
+
+impl<F, T> Vec2<T> where F: Float, T: ToRad<Output=F> {
+    /// sphere_to_cart converts the given (inclination, azimuth) point on a sphere
+    /// (`self`) of radius `r` to cartesian coordinates. It is implemented
+    /// according to:
+    ///
+    /// http://en.wikipedia.org/wiki/Spherical_coordinate_system#Cartesian_coordinates
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::{Vec2, Vec3};
+    /// use fiz_math::unit::Rad;
+    ///
+    /// let r = Vec2(Rad(1.416), Rad(0.309)).sphere_to_cart(5.0);
+    /// assert!(r.almost_equal(Vec3(Rad(4.706), Rad(1.502), Rad(0.770)), 0.001))
+    /// ```
+    pub fn sphere_to_cart(self, r: F) -> Vec3<Rad<F>> {
+        let i = self.0.to_rad().0;
+        let a = self.1.to_rad().0;
+        Vec3(
+            Rad(r * i.sin() * a.cos()),
+            Rad(r * i.sin() * a.sin()),
+            Rad(r * i.cos()),
+        )
+    }
 }
 
 swizzle!(x, Vec2);

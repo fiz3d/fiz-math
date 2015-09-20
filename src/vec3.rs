@@ -6,6 +6,7 @@ pub use num::{Zero, One, Num};
 use num;
 use super::float::Float;
 use super::Vec2;
+use super::unit::ToRad;
 use std::fmt;
 use clamp::Clamp;
 use std::iter::IntoIterator;
@@ -629,6 +630,39 @@ impl<T: Float> Vec3<T> {
   pub fn lerp(self, other: Self, t: T) -> Self {
     self * other.mul_scalar(t)
   }
+}
+
+impl<F, T> Vec3<T> where F: Float, T: Float+ToRad<Output=F> {
+    /// cart_to_sphere converts the given cartesian coordinate space point `self`
+    /// into spherical coordinates in the form of a radius, (inclination, azimuth)
+    /// pair. It is implemented according to:
+    ///
+    /// http://en.wikipedia.org/wiki/Spherical_coordinate_system#Cartesian_coordinates
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::{Vec2, Vec3, Float};
+    /// use fiz_math::unit::Rad;
+    ///
+    /// let inputRadius = 5.0;
+    /// let inputSphere = Vec2(Rad(1.416), Rad(0.309));
+    ///
+    /// // Spherical to Cartesian
+    /// let cart = inputSphere.sphere_to_cart(inputRadius);
+    ///
+    /// // Back to Spherical
+    /// let (radius, sphere) = cart.cart_to_sphere();
+    ///
+    /// assert!(radius.equal(inputRadius));
+    /// assert!(sphere.almost_equal(inputSphere, 0.001));
+    /// ```
+    pub fn cart_to_sphere(self) -> (F, Vec2<T>) {
+        let r = self.length();
+        let theta = (self.2 / r).acos();
+        let phi = self.1.atan2(self.0);
+        (r.to_rad().0, Vec2(theta, phi))
+    }
 }
 
 swizzle!(x, Vec3);

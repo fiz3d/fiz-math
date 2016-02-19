@@ -389,6 +389,10 @@ macro_rules! unit {
             fn trailing_zeros(self) -> u32 { self.0.trailing_zeros() }
             fn rotate_left(self, n: u32) -> Self { $ident(self.0.rotate_left(n)) }
             fn rotate_right(self, n: u32) -> Self { $ident(self.0.rotate_right(n)) }
+            fn signed_shl(self, n: u32) -> Self { $ident(self.0.signed_shl(n)) }
+            fn signed_shr(self, n: u32) -> Self { $ident(self.0.signed_shr(n)) }
+            fn unsigned_shl(self, n: u32) -> Self { $ident(self.0.unsigned_shl(n)) }
+            fn unsigned_shr(self, n: u32) -> Self { $ident(self.0.unsigned_shr(n)) }
             fn swap_bytes(self) -> Self { $ident(self.0.swap_bytes()) }
             fn from_be(x: Self) -> Self { $ident(T::from_be(x.0)) }
             fn from_le(x: Self) -> Self { $ident(T::from_le(x.0)) }

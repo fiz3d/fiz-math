@@ -1,3 +1,10 @@
+machine:
+  pre:
+    # See:
+    # https://github.com/rust-lang/cargo/issues/2078
+    # https://discuss.circleci.com/t/cargo-build-fails-on-fresh-install/1102/3
+    - eval `ssh-agent` && ssh-add /home/ubuntu/.ssh/id_circleci_github
+
 dependencies:
   override:
     - bash <(curl -sf https://raw.githubusercontent.com/brson/multirust/master/blastoff.sh) --yes

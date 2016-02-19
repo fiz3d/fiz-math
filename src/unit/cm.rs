@@ -27,7 +27,7 @@ pub trait ToCM{
 /// ```
 unit!(CM);
 
-impl<T: Num+NumCast> ToMM for CM<T> {
+impl<T: Num + NumCast> ToMM for CM<T> {
     type Output = T;
 
     /// to_mm returns these centimeters converted to millimeters.
@@ -44,7 +44,7 @@ impl<T: Num+NumCast> ToMM for CM<T> {
     }
 }
 
-impl<T: Num+NumCast> ToCM for CM<T> {
+impl<T: Num + NumCast> ToCM for CM<T> {
     type Output = T;
 
     /// to_cm simply returns self.
@@ -61,7 +61,7 @@ impl<T: Num+NumCast> ToCM for CM<T> {
     }
 }
 
-impl<T: Num+NumCast> ToM for CM<T> {
+impl<T: Num + NumCast> ToM for CM<T> {
     type Output = T;
 
     /// to_m returns these centimeters converted to meters.
@@ -78,7 +78,7 @@ impl<T: Num+NumCast> ToM for CM<T> {
     }
 }
 
-impl<T: Num+NumCast> ToKM for CM<T> {
+impl<T: Num + NumCast> ToKM for CM<T> {
     type Output = T;
 
     /// to_km returns these centimeters converted to kilometers.

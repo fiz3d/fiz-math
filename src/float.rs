@@ -1,7 +1,7 @@
 extern crate num;
 
 /// The default epsilon value used for floating point comparisons.
-pub static EPSILON:f64 = 1.0E-8;
+pub static EPSILON: f64 = 1.0E-8;
 
 pub trait Float: num::Float{
     /// Tells if the two floating-point values `self` and `y` are considered equal
@@ -57,7 +57,7 @@ pub trait Float: num::Float{
 impl<T: num::Float> Float for T {
     fn almost_equal<N: num::Float>(self, y: T, abs_tol: N) -> bool {
         let r = T::from(1.0).unwrap().max(self.abs().max(y.abs()));
-        self == y || ((self-y).abs() <= T::from(abs_tol).unwrap() * r)
+        self == y || ((self - y).abs() <= T::from(abs_tol).unwrap() * r)
     }
 
     fn equal(self, y: T) -> bool {
@@ -65,6 +65,6 @@ impl<T: num::Float> Float for T {
     }
 
     fn lerp(self, b: Self, t: Self) -> Self {
-        (T::one()-t)*self + t*b
+        (T::one() - t) * self + t * b
     }
 }

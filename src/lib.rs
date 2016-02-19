@@ -1,10 +1,11 @@
 extern crate num;
 
 // Must re-export num for the unit! macro.
-#[doc(hidden)] pub use num as num_export;
+#[doc(hidden)]
+pub use num as num_export;
 
-#[macro_use] mod swizzle;
-#[macro_use] pub mod unit_macro;
+#[macro_use]mod swizzle;
+#[macro_use]pub mod unit_macro;
 
 mod vec2;
 mod vec3;

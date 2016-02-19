@@ -40,7 +40,10 @@ impl<T: Copy> IntoIterator for Vec2<T> {
     type Item = T;
     type IntoIter = Vec2Iterator<T>;
     fn into_iter(self) -> Self::IntoIter {
-        Vec2Iterator{v: self, index: 0}
+        Vec2Iterator {
+            v: self,
+            index: 0,
+        }
     }
 }
 
@@ -76,7 +79,7 @@ impl<T: fmt::Display> fmt::Display for Vec2<T> {
     }
 }
 
-impl<T: One> One for Vec2<T>{
+impl<T: One> One for Vec2<T> {
     /// one returns the one value for a vector whose component type implements the
     /// num::One trait.
     ///
@@ -98,7 +101,7 @@ impl<T: One> One for Vec2<T>{
     }
 }
 
-impl<T: Float> Vec2<T>{
+impl<T: Float> Vec2<T> {
     /// almost_equal tells if this vector is equal to the other given an absolute
     /// tolerence value (see the almost_equal function for more details).
     ///
@@ -113,8 +116,7 @@ impl<T: Float> Vec2<T>{
     /// assert!(!a.almost_equal(b, 0.1));
     /// ```
     pub fn almost_equal<N: num::Float>(self, other: Self, abs_tol: N) -> bool {
-        self.0.almost_equal(other.0, abs_tol) &&
-        self.1.almost_equal(other.1, abs_tol)
+        self.0.almost_equal(other.0, abs_tol) && self.1.almost_equal(other.1, abs_tol)
     }
 
     /// is_nan tells if all of this vectors components are NaN.
@@ -134,8 +136,7 @@ impl<T: Float> Vec2<T>{
     /// # }
     /// ```
     pub fn is_nan(self) -> bool {
-        self.0.is_nan() &&
-        self.1.is_nan()
+        self.0.is_nan() && self.1.is_nan()
     }
 
     /// round returns the nearest integer to a number. Round half-way cases away
@@ -153,7 +154,7 @@ impl<T: Float> Vec2<T>{
     }
 }
 
-impl<T: Add<Output = T>> Add for Vec2<T>{
+impl<T: Add<Output = T>> Add for Vec2<T> {
     type Output = Self;
 
     /// add performs component-wise addition of two vectors.
@@ -168,10 +169,7 @@ impl<T: Add<Output = T>> Add for Vec2<T>{
     /// assert_eq!(a + b, Vec2(5, 7));
     /// ```
     fn add(self, _rhs: Self) -> Self {
-        Vec2(
-            self.0 + _rhs.0,
-            self.1 + _rhs.1,
-        )
+        Vec2(self.0 + _rhs.0, self.1 + _rhs.1)
     }
 }
 
@@ -187,14 +185,11 @@ impl<T: Add<Output = T> + Copy> Vec2<T> {
     /// assert_eq!(a.add_scalar(1), Vec2(2, 3));
     /// ```
     pub fn add_scalar(self, _rhs: T) -> Self {
-        Vec2(
-            self.0 + _rhs,
-            self.1 + _rhs,
-        )
+        Vec2(self.0 + _rhs, self.1 + _rhs)
     }
 }
 
-impl<T: Neg<Output = T>> Neg for Vec2<T>{
+impl<T: Neg<Output = T>> Neg for Vec2<T> {
     type Output = Self;
 
     /// neg returns the negated (i.e. inversed) vector self.
@@ -211,7 +206,7 @@ impl<T: Neg<Output = T>> Neg for Vec2<T>{
     }
 }
 
-impl<T: Sub<Output = T>> Sub for Vec2<T>{
+impl<T: Sub<Output = T>> Sub for Vec2<T> {
     type Output = Self;
 
     /// sub performs component-wise subtraction of two vectors.
@@ -226,10 +221,7 @@ impl<T: Sub<Output = T>> Sub for Vec2<T>{
     /// assert_eq!(a - b, Vec2(-3, -3));
     /// ```
     fn sub(self, _rhs: Self) -> Self {
-        Vec2(
-            self.0 - _rhs.0,
-            self.1 - _rhs.1,
-        )
+        Vec2(self.0 - _rhs.0, self.1 - _rhs.1)
     }
 }
 
@@ -245,14 +237,11 @@ impl<T: Sub<Output = T> + Copy> Vec2<T> {
     /// assert_eq!(a.sub_scalar(1), Vec2(1, 2));
     /// ```
     pub fn sub_scalar(self, _rhs: T) -> Self {
-        Vec2(
-            self.0 - _rhs,
-            self.1 - _rhs,
-        )
+        Vec2(self.0 - _rhs, self.1 - _rhs)
     }
 }
 
-impl<T: Mul<Output = T>> Mul for Vec2<T>{
+impl<T: Mul<Output = T>> Mul for Vec2<T> {
     type Output = Self;
 
     /// mul performs component-wise multiplication of two vectors.
@@ -267,10 +256,7 @@ impl<T: Mul<Output = T>> Mul for Vec2<T>{
     /// assert_eq!(a * b, Vec2(4, 10));
     /// ```
     fn mul(self, _rhs: Self) -> Self {
-        Vec2(
-            self.0 * _rhs.0,
-            self.1 * _rhs.1,
-        )
+        Vec2(self.0 * _rhs.0, self.1 * _rhs.1)
     }
 }
 
@@ -286,14 +272,11 @@ impl<T: Mul<Output = T> + Copy> Vec2<T> {
     /// assert_eq!(a.mul_scalar(2), Vec2(4, 6));
     /// ```
     pub fn mul_scalar(self, _rhs: T) -> Self {
-        Vec2(
-            self.0 * _rhs,
-            self.1 * _rhs,
-        )
+        Vec2(self.0 * _rhs, self.1 * _rhs)
     }
 }
 
-impl<T: Div<Output = T>> Div for Vec2<T>{
+impl<T: Div<Output = T>> Div for Vec2<T> {
     type Output = Vec2<T>;
 
     /// div performs component-wise division of two vectors.
@@ -308,10 +291,7 @@ impl<T: Div<Output = T>> Div for Vec2<T>{
     /// assert_eq!(a / b, Vec2(4, 2));
     /// ```
     fn div(self, _rhs: Self) -> Self {
-        Vec2(
-            self.0 / _rhs.0,
-            self.1 / _rhs.1,
-        )
+        Vec2(self.0 / _rhs.0, self.1 / _rhs.1)
     }
 }
 
@@ -327,14 +307,11 @@ impl<T: Div<Output = T> + Copy> Vec2<T> {
     /// assert_eq!(a.div_scalar(2), Vec2(1, 2));
     /// ```
     pub fn div_scalar(self, _rhs: T) -> Self {
-        Vec2(
-            self.0 / _rhs,
-            self.1 / _rhs,
-        )
+        Vec2(self.0 / _rhs, self.1 / _rhs)
     }
 }
 
-impl<T: Clamp<Elem = T> + Copy> Clamp for Vec2<T>{
+impl<T: Clamp<Elem = T> + Copy> Clamp for Vec2<T> {
     type Elem = T;
 
     /// clamp returns the vector with each element clamped to the range of
@@ -349,10 +326,7 @@ impl<T: Clamp<Elem = T> + Copy> Clamp for Vec2<T>{
     /// assert_eq!(a.clamp(-1, 2), Vec2(-1, 2));
     /// ```
     fn clamp(self, min: T, max: T) -> Self {
-        Vec2(
-            self.0.clamp(min, max),
-            self.1.clamp(min, max),
-        )
+        Vec2(self.0.clamp(min, max), self.1.clamp(min, max))
     }
 }
 
@@ -362,7 +336,7 @@ impl<T> AsRef<Vec2<T>> for Vec2<T> {
     }
 }
 
-impl<T:PartialOrd> Vec2<T> {
+impl<T: PartialOrd> Vec2<T> {
     /// any_less tells if any component of the other vector is less than any
     /// component of this vector.
     ///
@@ -374,7 +348,7 @@ impl<T:PartialOrd> Vec2<T> {
     /// let a = Vec2(0, 1);
     /// assert!(a.any_less(Vec2(0, 2)));
     /// ```
-    pub fn any_less<O:AsRef<Self>>(&self, other: O) -> bool {
+    pub fn any_less<O: AsRef<Self>>(&self, other: O) -> bool {
         let o = other.as_ref();
         self.0 < o.0 || self.1 < o.1
     }
@@ -390,7 +364,7 @@ impl<T:PartialOrd> Vec2<T> {
     /// let a = Vec2(0, 2);
     /// assert!(a.any_greater(Vec2(0, 1)));
     /// ```
-    pub fn any_greater<O:AsRef<Self>>(&self, other: O) -> bool {
+    pub fn any_greater<O: AsRef<Self>>(&self, other: O) -> bool {
         let o = other.as_ref();
         self.0 > o.0 || self.1 > o.1
     }
@@ -417,12 +391,11 @@ impl<T: PartialEq> PartialEq for Vec2<T> {
     /// assert_eq!(a, b);
     /// ```
     fn eq(&self, _rhs: &Self) -> bool {
-        self.0 == _rhs.0 &&
-        self.1 == _rhs.1
+        self.0 == _rhs.0 && self.1 == _rhs.1
     }
 }
 
-impl<T: PartialOrd> PartialOrd for Vec2<T>{
+impl<T: PartialOrd> PartialOrd for Vec2<T> {
     /// partial_cmp compares the two vectors component-wise.
     ///
     /// # Examples
@@ -447,42 +420,54 @@ impl<T: PartialOrd> PartialOrd for Vec2<T>{
 }
 
 impl<T: PartialOrd> Vec2<T> {
-  /// min returns a vector representing the smallest components of the `self`
-  /// and `other` vectors.
-  ///
-  /// # Examples
-  ///
-  /// ```
-  /// use fiz_math::Vec2;
-  ///
-  /// assert_eq!(Vec2(0, 1).min(Vec2(-1, 0)), Vec2(-1, 0));
-  /// ```
-  pub fn min(self, other: Self) -> Self {
-    Vec2(
-      if self.0 < other.0 { self.0 } else {other.0},
-      if self.1 < other.1 { self.1 } else {other.1},
-    )
-  }
+    /// min returns a vector representing the smallest components of the `self`
+    /// and `other` vectors.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::Vec2;
+    ///
+    /// assert_eq!(Vec2(0, 1).min(Vec2(-1, 0)), Vec2(-1, 0));
+    /// ```
+    pub fn min(self, other: Self) -> Self {
+        Vec2(if self.0 < other.0 {
+                 self.0
+             } else {
+                 other.0
+             },
+             if self.1 < other.1 {
+                 self.1
+             } else {
+                 other.1
+             })
+    }
 
-  /// max returns a vector representing the largest components of the `self`
-  /// and `other` vectors.
-  ///
-  /// # Examples
-  ///
-  /// ```
-  /// use fiz_math::Vec2;
-  ///
-  /// assert_eq!(Vec2(0, 1).max(Vec2(-1, 0)), Vec2(0, 1));
-  /// ```
-  pub fn max(self, other: Self) -> Self {
-    Vec2(
-      if self.0 > other.0 { self.0 } else {other.0},
-      if self.1 > other.1 { self.1 } else {other.1},
-    )
-  }
+    /// max returns a vector representing the largest components of the `self`
+    /// and `other` vectors.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::Vec2;
+    ///
+    /// assert_eq!(Vec2(0, 1).max(Vec2(-1, 0)), Vec2(0, 1));
+    /// ```
+    pub fn max(self, other: Self) -> Self {
+        Vec2(if self.0 > other.0 {
+                 self.0
+             } else {
+                 other.0
+             },
+             if self.1 > other.1 {
+                 self.1
+             } else {
+                 other.1
+             })
+    }
 }
 
-impl<T: Zero> Zero for Vec2<T>{
+impl<T: Zero> Zero for Vec2<T> {
     /// zero returns the zero-value for the vector.
     ///
     /// # Examples
@@ -512,111 +497,117 @@ impl<T: Zero> Zero for Vec2<T>{
     /// assert!(Vec2(0.0f64, 0.0).is_zero());
     /// ```
     fn is_zero(&self) -> bool {
-        self.0.is_zero() &&
-        self.1.is_zero()
+        self.0.is_zero() && self.1.is_zero()
     }
 }
 
-impl<T: Num+Copy> Vec2<T> {
-  /// dot returns the dot product of self and b. For length calculations use
-  /// length or length_sq functions instead (for clarity).
-  ///
-  /// # Examples
-  ///
-  /// ```
-  /// use fiz_math::Vec2;
-  ///
-  /// let x = Vec2(1, 2);
-  /// assert_eq!(x.dot(x), 5);
-  /// ```
-  pub fn dot(self, b: Self) -> T {
-    self.0*b.0 + self.1*b.1
-  }
+impl<T: Num + Copy> Vec2<T> {
+    /// dot returns the dot product of self and b. For length calculations use
+    /// length or length_sq functions instead (for clarity).
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::Vec2;
+    ///
+    /// let x = Vec2(1, 2);
+    /// assert_eq!(x.dot(x), 5);
+    /// ```
+    pub fn dot(self, b: Self) -> T {
+        self.0 * b.0 + self.1 * b.1
+    }
 
-  /// length_sq returns the magnitude squared of this vector, useful primarily
-  /// for comparing distances.
-  ///
-  /// # Examples
-  ///
-  /// ```
-  /// use fiz_math::Vec2;
-  ///
-  /// assert_eq!(Vec2(1, 2).length_sq(), 5);
-  /// ```
-  pub fn length_sq(self) -> T { self.dot(self) }
+    /// length_sq returns the magnitude squared of this vector, useful primarily
+    /// for comparing distances.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::Vec2;
+    ///
+    /// assert_eq!(Vec2(1, 2).length_sq(), 5);
+    /// ```
+    pub fn length_sq(self) -> T {
+        self.dot(self)
+    }
 }
 
 impl<T: Float> Vec2<T> {
-  /// length returns the magnitude of this vector. Use length_sq instead when
-  /// comparing distances, because it avoids the extra sqrt operation needed
-  /// by this method.
-  ///
-  /// # Examples
-  ///
-  /// ```
-  /// use fiz_math::{Vec2, Float};
-  ///
-  /// let l = Vec2(1.0, 2.0).length();
-  /// assert!(l.equal(2.23606797));
-  /// ```
-  pub fn length(self) -> T { self.length_sq().sqrt() }
-
-  /// normalize returns the normalized (i.e. length/magnitude == 1) vector
-  /// representing self. If the vector's length is zero and division by zero
-  /// would occur, then None is returned.
-  ///
-  /// # Examples
-  ///
-  /// ```
-  /// use fiz_math::Vec2;
-  ///
-  /// let n = Vec2(1.0, 10.0).normalize().unwrap();
-  /// assert!(n.almost_equal(Vec2(0.1, 1.0), 1e-2));
-  /// ```
-  pub fn normalize(self) -> Option<Self> {
-    let length = self.length();
-    if length == T::zero() {
-      None
-    } else {
-      Some(self.div_scalar(length))
+    /// length returns the magnitude of this vector. Use length_sq instead when
+    /// comparing distances, because it avoids the extra sqrt operation needed
+    /// by this method.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::{Vec2, Float};
+    ///
+    /// let l = Vec2(1.0, 2.0).length();
+    /// assert!(l.equal(2.23606797));
+    /// ```
+    pub fn length(self) -> T {
+        self.length_sq().sqrt()
     }
-  }
 
-  /// project returns a vector representing the projection of the `self` vector
-  /// onto the `other` vector.
-  ///
-  /// # Examples
-  ///
-  /// ```
-  /// use fiz_math::Vec2;
-  ///
-  /// let a = Vec2(1.0, 2.0);
-  /// let b = Vec2(1.0, 3.0);
-  /// assert!(a.project(b).almost_equal(Vec2(0.7, 2.09), 0.01));
-  /// ```
-  pub fn project(self, other: Self) -> Self {
-    other.mul_scalar(self.dot(other) / other.length_sq())
-  }
+    /// normalize returns the normalized (i.e. length/magnitude == 1) vector
+    /// representing self. If the vector's length is zero and division by zero
+    /// would occur, then None is returned.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::Vec2;
+    ///
+    /// let n = Vec2(1.0, 10.0).normalize().unwrap();
+    /// assert!(n.almost_equal(Vec2(0.1, 1.0), 1e-2));
+    /// ```
+    pub fn normalize(self) -> Option<Self> {
+        let length = self.length();
+        if length == T::zero() {
+            None
+        } else {
+            Some(self.div_scalar(length))
+        }
+    }
 
-  /// lerp returns a vector representing the linear interpolation between the
-  /// `self` and `other` vectors. The parameter `t` is the amount to interpolate
-  /// between the vectors (e.g. `0.0 - 1.0`).
-  ///
-  /// # Examples
-  ///
-  /// ```
-  /// use fiz_math::Vec2;
-  ///
-  /// let a = Vec2(1.25, 1.25);
-  /// let b = Vec2(2.0, 2.0);
-  /// assert_eq!(a.lerp(b, 0.25), Vec2(0.625, 0.625));
-  /// ```
-  pub fn lerp(self, other: Self, t: T) -> Self {
-    self * other.mul_scalar(t)
-  }
+    /// project returns a vector representing the projection of the `self` vector
+    /// onto the `other` vector.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::Vec2;
+    ///
+    /// let a = Vec2(1.0, 2.0);
+    /// let b = Vec2(1.0, 3.0);
+    /// assert!(a.project(b).almost_equal(Vec2(0.7, 2.09), 0.01));
+    /// ```
+    pub fn project(self, other: Self) -> Self {
+        other.mul_scalar(self.dot(other) / other.length_sq())
+    }
+
+    /// lerp returns a vector representing the linear interpolation between the
+    /// `self` and `other` vectors. The parameter `t` is the amount to interpolate
+    /// between the vectors (e.g. `0.0 - 1.0`).
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use fiz_math::Vec2;
+    ///
+    /// let a = Vec2(1.25, 1.25);
+    /// let b = Vec2(2.0, 2.0);
+    /// assert_eq!(a.lerp(b, 0.25), Vec2(0.625, 0.625));
+    /// ```
+    pub fn lerp(self, other: Self, t: T) -> Self {
+        self * other.mul_scalar(t)
+    }
 }
 
-impl<F, T> Vec2<T> where F: Float, T: ToRad<Output=F> {
+impl<F, T> Vec2<T>
+    where F: Float,
+          T: ToRad<Output = F>
+{
     /// sphere_to_cart converts the given (inclination, azimuth) point on a sphere
     /// (`self`) of radius `r` to cartesian coordinates. It is implemented
     /// according to:
@@ -635,11 +626,9 @@ impl<F, T> Vec2<T> where F: Float, T: ToRad<Output=F> {
     pub fn sphere_to_cart(self, r: F) -> Vec3<Rad<F>> {
         let i = self.0.to_rad().0;
         let a = self.1.to_rad().0;
-        Vec3(
-            Rad(r * i.sin() * a.cos()),
-            Rad(r * i.sin() * a.sin()),
-            Rad(r * i.cos()),
-        )
+        Vec3(Rad(r * i.sin() * a.cos()),
+             Rad(r * i.sin() * a.sin()),
+             Rad(r * i.cos()))
     }
 }
 

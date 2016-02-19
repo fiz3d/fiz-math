@@ -40,7 +40,7 @@ pub trait ToRad{
 /// ```
 unit!(Rad);
 
-impl<T: Num+NumCast> ToRad for Rad<T> {
+impl<T: Num + NumCast> ToRad for Rad<T> {
     type Output = T;
 
     /// to_rad simply returns self.
@@ -57,9 +57,9 @@ impl<T: Num+NumCast> ToRad for Rad<T> {
     }
 }
 
-static FRAC_180_PI:f64 = 180.0 / f64::consts::PI;
+static FRAC_180_PI: f64 = 180.0 / f64::consts::PI;
 
-impl<T: Num+NumCast> ToDeg for Rad<T> {
+impl<T: Num + NumCast> ToDeg for Rad<T> {
     type Output = T;
 
     /// to_deg converts these radians into degrees.
@@ -67,7 +67,7 @@ impl<T: Num+NumCast> ToDeg for Rad<T> {
     /// # Examples
     ///
     /// ```
-	/// use std::f64::consts::PI;
+    /// use std::f64::consts::PI;
     /// use fiz_math::unit::{Rad, Deg, ToDeg};
     ///
     /// assert_eq!(Rad(2.0*PI).to_deg(), Deg(360.0));

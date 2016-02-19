@@ -99,7 +99,6 @@ macro_rules! unit {
     };
 
     (impl_std_ops, $ident:ident ) => {
-        // addition
         impl<T: ::std::ops::Add<Output = T>> ::std::ops::Add for $ident<T> {
             type Output = Self;
 
@@ -108,7 +107,6 @@ macro_rules! unit {
             }
         }
 
-        // subtraction
         impl<T: ::std::ops::Sub<Output = T>> ::std::ops::Sub for $ident<T> {
             type Output = Self;
 
@@ -117,7 +115,6 @@ macro_rules! unit {
             }
         }
 
-        // multiplication
         impl<T: ::std::ops::Mul<Output = T>> ::std::ops::Mul for $ident<T> {
             type Output = Self;
 
@@ -126,7 +123,6 @@ macro_rules! unit {
             }
         }
 
-        // division
         impl<T: ::std::ops::Div<Output = T>> ::std::ops::Div for $ident<T> {
             type Output = Self;
 
@@ -135,56 +131,48 @@ macro_rules! unit {
             }
         }
 
-        // remainder
         impl<T: ::std::ops::Rem<Output = T>> ::std::ops::Rem for $ident<T> {
             type Output = Self;
 
             fn rem(self, rhs: Self) -> Self { $ident(self.0 % rhs.0) }
         }
 
-        // negation
         impl<T: ::std::ops::Neg<Output = T>> ::std::ops::Neg for $ident<T> {
             type Output = Self;
 
             fn neg(self) -> Self::Output { $ident(-self.0) }
         }
 
-        // not
         impl<T: ::std::ops::Not<Output = T>> ::std::ops::Not for $ident<T> {
             type Output = Self;
 
             fn not(self) -> Self::Output { $ident(!self.0) }
         }
 
-        // bitwise and
         impl<T: ::std::ops::BitAnd<Output = T>> ::std::ops::BitAnd for $ident<T> {
             type Output = Self;
 
             fn bitand(self, rhs: Self) -> Self::Output { $ident(self.0 & rhs.0) }
         }
 
-        // bitwise or
         impl<T: ::std::ops::BitOr<Output = T>> ::std::ops::BitOr for $ident<T> {
             type Output = Self;
 
             fn bitor(self, rhs: Self) -> Self::Output { $ident(self.0 | rhs.0) }
         }
 
-        // bitwise xor
         impl<T: ::std::ops::BitXor<Output = T>> ::std::ops::BitXor for $ident<T> {
             type Output = Self;
 
             fn bitxor(self, rhs: Self) -> Self::Output { $ident(self.0 ^ rhs.0) }
         }
 
-        // shift left
         impl<T: ::std::ops::Shl<usize>> ::std::ops::Shl<usize> for $ident<T> {
             type Output = $ident<T::Output>;
 
             fn shl(self, rhs: usize) -> Self::Output { $ident(self.0 << rhs) }
         }
 
-        // shift right
         impl<T: ::std::ops::Shr<usize>> ::std::ops::Shr<usize> for $ident<T> {
             type Output = $ident<T::Output>;
 
@@ -193,17 +181,14 @@ macro_rules! unit {
     };
 
     (impl_std_cmp, $ident:ident ) => {
-        // partial equality
         impl<T: ::std::cmp::PartialEq> ::std::cmp::PartialEq for $ident<T> {
             fn eq(&self, _rhs: &Self) -> bool {
                 self.0 == _rhs.0
             }
         }
 
-        // equality
         impl<T: ::std::cmp::Eq> ::std::cmp::Eq for $ident<T> {}
 
-        // partial ordering
         impl<T: ::std::cmp::PartialOrd> ::std::cmp::PartialOrd for $ident<T> {
             fn partial_cmp(&self, other: &Self) -> Option<::std::cmp::Ordering> {
                 if self.0 < other.0 {
@@ -218,7 +203,6 @@ macro_rules! unit {
             }
         }
 
-        // total ordering
         impl<T: ::std::cmp::Ord> ::std::cmp::Ord for $ident<T> {
             fn cmp(&self, other: &Self) -> ::std::cmp::Ordering {
                 if self.0 < other.0 {
@@ -281,7 +265,6 @@ macro_rules! unit {
             fn max_value() -> Self { $ident(T::max_value()) }
         }
 
-        // checked addition
         impl<T: $crate::num_export::traits::CheckedAdd<Output = T>> $crate::num_export::traits::CheckedAdd for $ident<T> {
             fn checked_add(&self, _rhs: &Self) -> Option<Self> {
                 match self.0.checked_add(&_rhs.0) {
@@ -291,7 +274,6 @@ macro_rules! unit {
             }
         }
 
-        // checked subtraction
         impl<T: $crate::num_export::traits::CheckedSub<Output = T>> $crate::num_export::traits::CheckedSub for $ident<T> {
             fn checked_sub(&self, _rhs: &Self) -> Option<Self> {
                 match self.0.checked_sub(&_rhs.0) {
@@ -301,7 +283,6 @@ macro_rules! unit {
             }
         }
 
-        // checked multiplication
         impl<T: $crate::num_export::traits::CheckedMul<Output = T>> $crate::num_export::traits::CheckedMul for $ident<T> {
             fn checked_mul(&self, _rhs: &Self) -> Option<Self> {
                 match self.0.checked_mul(&_rhs.0) {
@@ -311,7 +292,6 @@ macro_rules! unit {
             }
         }
 
-        // checked division
         impl<T: $crate::num_export::traits::CheckedDiv<Output = T>> $crate::num_export::traits::CheckedDiv for $ident<T> {
             fn checked_div(&self, _rhs: &Self) -> Option<Self> {
                 match self.0.checked_div(&_rhs.0) {

@@ -9,4 +9,4 @@ keywords = ["fiz", "math", "linear", "algebra", "3D"]
 license = "BSD-3-Clause"
 
 [dependencies]
-num = "0.1.27"
+num = "0.1.28"
